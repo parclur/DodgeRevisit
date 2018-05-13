@@ -184,7 +184,6 @@ public class PlayerLoginManager : MonoBehaviour {
 
         GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player1", p1CharacterClass);
 
-        Debug.Log(numberOfPlayers);
         if (numberOfPlayers == 1)
         {
             SceneManager.LoadScene("Level_Select");

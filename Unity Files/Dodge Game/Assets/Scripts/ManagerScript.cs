@@ -86,8 +86,8 @@ public class ManagerScript : MonoBehaviour {
         if (SceneManager.GetActiveScene().name == "End_Scene")
         {
             canCheck = false;
-            Debug.Log("setting player stats");
-            Debug.Log("Player1 kills: " + player1Kills);
+            //Debug.Log("setting player stats");
+            //Debug.Log("Player1 kills: " + player1Kills);
             GameObject.Find("End_Manager").GetComponent<EndSceneUIData>().SetKills(player1Kills, player2Kills, player3Kills, player4Kills);
             GameObject.Find("End_Manager").GetComponent<EndSceneUIData>().SetDeaths(player1Deaths, player2Deaths, player3Deaths, player4Deaths);
 
@@ -173,7 +173,7 @@ public class ManagerScript : MonoBehaviour {
 
     public int GetNumPlayers()
     {
-        Debug.Log(playerAmount);
+
         return playerAmount;
     }
 
@@ -205,26 +205,25 @@ public class ManagerScript : MonoBehaviour {
         if (player == "Player1")
         {
             player1Class = playerClass;
-            //player1Class = PlayerLoginManager.p1CharacterClass;
-            Debug.Log("Set Player1: " + player1Class);
+            //Debug.Log("Set Player1: " + player1Class);
         }
 
         if (player == "Player2")
         {
             player2Class = playerClass;
-            Debug.Log("Set Player2: " + player2Class);
+            //Debug.Log("Set Player2: " + player2Class);
         }
 
         if (player == "Player3")
         {
             player3Class = playerClass;
-            Debug.Log("Set Player3: " + player3Class);
+            //Debug.Log("Set Player3: " + player3Class);
         }
 
         if (player == "Player4")
         {
             player4Class = playerClass;
-            Debug.Log("Set Player4: " + player4Class);
+            //Debug.Log("Set Player4: " + player4Class);
         }
     }
 
@@ -291,7 +290,7 @@ public class ManagerScript : MonoBehaviour {
                 // appear congratulations to the winning team, increase score, reset
                 canCheck = false;
                 endofRound = true;
-                Debug.Log("Team2 Wins Round " + gameRound + "!");
+                //Debug.Log("Team2 Wins Round " + gameRound + "!");
 
                 if (GetComponent<UIManager>())
                 {
@@ -299,7 +298,7 @@ public class ManagerScript : MonoBehaviour {
                 }
 
                 team2Score++;
-                Debug.Log("Team 1 score: " + team1Score + " vs " + "Team 2 score: " + team2Score);
+                //Debug.Log("Team 1 score: " + team1Score + " vs " + "Team 2 score: " + team2Score);
                 StartCoroutine(WaitInBetweenMatch());
             }
         }
@@ -321,7 +320,7 @@ public class ManagerScript : MonoBehaviour {
                 canCheck = false;
                 endofRound = true;
 
-                Debug.Log("Team1 Wins Round " + gameRound + "!");
+                //Debug.Log("Team1 Wins Round " + gameRound + "!");
 
                 if (GetComponent<UIManager>())
                 {
@@ -329,7 +328,7 @@ public class ManagerScript : MonoBehaviour {
                 }
 
                 team1Score++;
-                Debug.Log("Team 1 score: " + team1Score + " vs " + "Team 2 score: " + team2Score);
+                //Debug.Log("Team 1 score: " + team1Score + " vs " + "Team 2 score: " + team2Score);
                 StartCoroutine(WaitInBetweenMatch());
             }
         }
@@ -390,7 +389,7 @@ public class ManagerScript : MonoBehaviour {
     {
         if(team1Score > team2Score)
         {
-            Debug.Log("Team1 Wins " + team1Score + " to " + team2Score + "!");
+            //Debug.Log("Team1 Wins " + team1Score + " to " + team2Score + "!");
 
             if (GetComponent<UIManager>())
             {
@@ -400,7 +399,7 @@ public class ManagerScript : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Team2 Wins " + team2Score + " to " + team1Score + "!");
+            //Debug.Log("Team2 Wins " + team2Score + " to " + team1Score + "!");
 
             if (GetComponent<UIManager>())
             {

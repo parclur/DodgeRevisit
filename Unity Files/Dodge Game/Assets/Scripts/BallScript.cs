@@ -11,6 +11,7 @@ public class BallScript : MonoBehaviour {
 	Rigidbody2D rb;
 
 	float speedThreshold = 20f;
+    float maxBounces = 4f; // always do a plus one because it collides with player 
 
     GameObject thrower;
     string possessorName;
@@ -36,7 +37,7 @@ public class BallScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		CheckForDeadBall ();
+		//CheckForDeadBall ();
 		SpawnTrail ();
 
 		collisionCooldown -= Time.deltaTime;
@@ -110,7 +111,6 @@ public class BallScript : MonoBehaviour {
 		if (speed < speedThreshold)
 		{
 			possession = 0;
-            //thrower = null;
 			UpdateColor ();
 		}
 	}
@@ -143,6 +143,7 @@ public class BallScript : MonoBehaviour {
         thrower = player;
         possessorName = player.name;
         possession = thrower.GetComponent<PlayerMovement>().team;
+        maxBounces = 3;
     }
 
     public void SendKillInfo(GameObject deadObj)
@@ -151,8 +152,8 @@ public class BallScript : MonoBehaviour {
 
         if(GameMan.GetComponent<ManagerScript>())
         {
-            Debug.Log(deadObj.name + " is dead");
-            Debug.Log(possessorName + "got a kill");
+            //Debug.Log(deadObj.name + " is dead");
+            //Debug.Log(possessorName + " got a kill");
             GameMan.GetComponent<ManagerScript>().IncrementPlayerDeaths(deadObj.name);
             GameMan.GetComponent<ManagerScript>().IncrementPlayerKills(possessorName);
         }
@@ -169,12 +170,32 @@ public class BallScript : MonoBehaviour {
 			lastCollisionObject = col.gameObject;
 			collisionCooldown = 0.1f;
 		}
-	}
 
-	void OnCollisionExit2D(Collision2D col)
-	{
-		
-	}
+        if (col.gameObject.tag == "Floor")
+        {
+            maxBounces = maxBounces - 1;
 
+            if (maxBounces <= 0)
+            {
+                possession = 0;
+            }
 
+            UpdateColor();
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Floor")
+        {
+            //maxBounces = maxBounces - 1;
+
+            if(maxBounces <= 0)
+            {
+               possession = 0;
+            }
+        }
+
+        UpdateColor();
+    }
 }

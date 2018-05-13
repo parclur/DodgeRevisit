@@ -26,7 +26,6 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         CheckUI();
-        UpdateTexts();
 	}
 
     void UpdateTexts()
@@ -45,6 +44,7 @@ public class UIManager : MonoBehaviour {
             blueTeamScoreText = GameObject.Find("BlueTeamScore").GetComponent<Text>();
             roundNumText = GameObject.Find("RoundNum").GetComponent<Text>();
             roundEndText = GameObject.Find("RoundWinText").GetComponent<Text>();
+            UpdateTexts();
         }
     }
 
@@ -70,6 +70,7 @@ public class UIManager : MonoBehaviour {
 
     public void DisableRoundEndText()
     {
-        roundEndText.text = "";
+        if (roundEndText != null)
+            roundEndText.text = "";
     }
 }

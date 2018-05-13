@@ -393,12 +393,13 @@ public class PlayerMovement : MonoBehaviour {
         cursorPrefab.transform.position = new Vector2(gameObject.transform.position.x + spawnX, gameObject.transform.position.y + spawnY);
     }
 
+
 	void CheckThrow()
 	{
 
         if (Input.GetAxis(playerThrow) != 0 && numBalls > 0 && ableToThrow)
 		{
-            Debug.Log("Thowing");
+
 			anim.SetBool ("Throwing", true);
 			ballUI.SetActive (false);
 
@@ -487,7 +488,7 @@ public class PlayerMovement : MonoBehaviour {
         if (shieldHealth > 0 && Input.GetAxis(playerShield) > 0)
         {
 
-            Debug.Log("Shielding");
+            //Debug.Log("Shielding");
             float xMag = Input.GetAxis(playerAimHor);
             float yMag = Input.GetAxis(playerAimVer);
             float xMag2 = Input.GetAxis(playerHor);
@@ -678,6 +679,12 @@ public class PlayerMovement : MonoBehaviour {
             dashAmount--;
 			anim.SetBool ("Dashing", true);
 
+            for(int i = 1; i < GameObject.FindGameObjectsWithTag("Ball").Length + 1; i++)
+            {
+                if (GameObject.Find("Ball" + i) != null)
+                    Physics2D.IgnoreCollision(GameObject.Find("Ball" + i).GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>(), true);
+            }
+
             canBeHit = false;
             StartCoroutine(NormalSpeed());
         }
@@ -689,6 +696,13 @@ public class PlayerMovement : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         speedMultiplier = 1.0f;
         canBeHit = true;
+
+        for (int i = 1; i < GameObject.FindGameObjectsWithTag("Ball").Length + 1; i++)
+        {
+            if (GameObject.Find("Ball" + i) != null)
+                Physics2D.IgnoreCollision(GameObject.Find("Ball" + i).GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>(), false);
+        }
+
         canCheckDash = true;
         StartCoroutine(AbleToDashAgain());
 
@@ -729,14 +743,14 @@ public class PlayerMovement : MonoBehaviour {
                 col.gameObject.GetComponent<Rigidbody2D>().velocity *= -1;
                 shieldHealth--;
 
-                Debug.Log("You got blocked bitch");
+                //Debug.Log("You got blocked bitch");
             }
         }
         else
         {
-            if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 && col.transform.GetComponent<BallScript>().possession != team)
+            if (canBeHit)
             {
-                if(canBeHit)
+                if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 && col.transform.GetComponent<BallScript>().possession != team)
                 {
                     if (numBalls > 0)
                     {
@@ -747,19 +761,21 @@ public class PlayerMovement : MonoBehaviour {
 
                     isOut = true;
                     col.gameObject.GetComponent<BallScript>().SendKillInfo(gameObject);
-					Vector3 deathPoint = transform.position;
-					Instantiate(explosionPrefab, deathPoint, Quaternion.identity);
-
+                    Vector3 deathPoint = transform.position;
+                    //Instantiate(explosionPrefab, deathPoint, Quaternion.identity);
                 }
-                else
+            }
+            else
+            {
+                if (col.gameObject.tag == "Ball")
                 {
-                    col.gameObject.GetComponent<BallScript>().ChangeTeam();
-                    col.gameObject.GetComponent<Rigidbody2D>().velocity *= -1;
+                    Physics2D.IgnoreCollision(col.gameObject.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>());
                 }
 
+                //col.gameObject.GetComponent<BallScript>().ChangeTeam();
+                //col.gameObject.GetComponent<Rigidbody2D>().velocity *= -1;
             }
         }
-
 	}
 
 }

@@ -659,7 +659,10 @@ MonoBehaviour:
       _name: Player1
       _descriptiveName: P2
       _startPlaying: 1
-      _defaultJoystickMaps: []
+      _defaultJoystickMaps:
+      - _enabled: 1
+        _categoryId: 0
+        _layoutId: 0
       _defaultMouseMaps: []
       _defaultKeyboardMaps: []
       _defaultCustomControllerMaps: []
@@ -671,7 +674,10 @@ MonoBehaviour:
       _name: Player2
       _descriptiveName: P3
       _startPlaying: 1
-      _defaultJoystickMaps: []
+      _defaultJoystickMaps:
+      - _enabled: 1
+        _categoryId: 0
+        _layoutId: 0
       _defaultMouseMaps: []
       _defaultKeyboardMaps: []
       _defaultCustomControllerMaps: []
@@ -683,7 +689,10 @@ MonoBehaviour:
       _name: Player3
       _descriptiveName: P4
       _startPlaying: 1
-      _defaultJoystickMaps: []
+      _defaultJoystickMaps:
+      - _enabled: 1
+        _categoryId: 0
+        _layoutId: 0
       _defaultMouseMaps: []
       _defaultKeyboardMaps: []
       _defaultCustomControllerMaps: []
@@ -693,18 +702,18 @@ MonoBehaviour:
       _excludeFromControllerAutoAssignment: 0
     actions:
     - _id: 1
-      _name: Submit
+      _name: AButton
       _type: 1
-      _descriptiveName: Submit
+      _descriptiveName: AButton
       _positiveDescriptiveName: 
       _negativeDescriptiveName: 
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 1
     - _id: 2
-      _name: Cancel
+      _name: BButton
       _type: 1
-      _descriptiveName: Cancel
+      _descriptiveName: BButton
       _positiveDescriptiveName: 
       _negativeDescriptiveName: 
       _behaviorId: 0
@@ -716,9 +725,9 @@ MonoBehaviour:
       _tag: 
       _id: 0
       _userAssignable: 1
-    - _name: PlayerLogin
-      _descriptiveName: PlayerLogin
-      _tag: PlayerLogin
+    - _name: PlayerActions
+      _descriptiveName: PlayerActions
+      _tag: PlayerActions
       _id: 1
       _userAssignable: 1
     actionCategoryMap:
@@ -3285,6 +3294,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 0
+  p1State: 0
+  p2State: 0
+  p3State: 0
+  p4State: 0
+  p1JoinText: {fileID: 2030796791}
+  p1Panel: {fileID: 10284804}
+  p1ReadyText: {fileID: 1738270796}
+  p1IsStriker: 0
+  p1StrikerCharacter: {fileID: 0}
+  p1BlockerCharacter: {fileID: 0}
+  p1CharacterRightSelectButton: {fileID: 0}
+  p1CharacterLeftSelectButton: {fileID: 0}
 --- !u!1 &1181843261
 GameObject:
   m_ObjectHideFlags: 0

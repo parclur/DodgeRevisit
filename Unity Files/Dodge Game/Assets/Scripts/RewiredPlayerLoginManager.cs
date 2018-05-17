@@ -8,23 +8,18 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
     public int playerId;
     private Rewired.Player player;
 
-    public bool waitingToJoin, characterSelect, readyToPlay;
+    //public bool waitingToJoin, characterSelect, readyToPlay;
 
-    void Awake()
+    void Start()
     {
         player = ReInput.players.GetPlayer(playerId);
     }
 
     void Update()
     {
-        if (player.GetAxis("Joy1Axis1") != 0.0f)
+        if (player.GetButtonDown("Submit"))
         {
-            Debug.Log("Move Horizontal!");
-        }
-
-        if (player.GetButtonDown("Fire"))
-        {
-            Debug.Log("Fire!");
+            Debug.Log(playerId + "Fire!");
         }
     }
 }

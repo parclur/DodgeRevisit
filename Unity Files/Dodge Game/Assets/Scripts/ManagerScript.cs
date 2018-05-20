@@ -118,8 +118,6 @@ public class ManagerScript : MonoBehaviour {
         GetComponent<UIManager>().SetRedTeamNum(team2Score);
         GetComponent<UIManager>().SetRoundNum(gameRound);
         }
-
-
     }
 
     void MenuSettings()

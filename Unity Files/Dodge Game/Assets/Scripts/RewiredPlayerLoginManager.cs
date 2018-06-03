@@ -503,15 +503,38 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         }
     }
 
-    bool CheckReadyPlayers()
+    bool IsSomeonePlaying()
     {
-        //if numplayersready == numplayers, then show "Press start to play"
-        if (p1Join == p1Ready && p2Join == p2Ready && p3Join == p3Ready && p4Join == p4Ready)
+        if (p1Join || p2Join || p3Join || p4Join)
         {
-            startTextPanel.SetActive(true);
             return true;
         }
 
         return false;
+    }
+
+    bool CheckReadyPlayers()
+    {
+        //if numplayersready == numplayers, then show "Press start to play"
+        if (p1Join || p2Join || p3Join || p4Join)
+        {
+            if (p1Join == p1Ready && p2Join == p2Ready && p3Join == p3Ready && p4Join == p4Ready)
+            {
+                startTextPanel.SetActive(true);
+                return true;
+            }
+
+            else
+            {
+                startTextPanel.SetActive(false);
+                return false;
+            }
+        }
+
+        else
+        {
+            startTextPanel.SetActive(false);
+            return false;
+        }
     }
 }

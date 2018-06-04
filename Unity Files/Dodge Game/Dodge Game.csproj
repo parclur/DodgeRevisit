@@ -353,15 +353,8 @@
     <Compile Include="Assets\Scripts\LevelSelectionManager.cs" />
     <Compile Include="Assets\Scripts\ManagerScript.cs" />
     <Compile Include="Assets\Scripts\OOBScript.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\Player2LoginManager.cs" />
-    <Compile Include="Assets\Scripts\Player3LoginManager.cs" />
-    <Compile Include="Assets\Scripts\Player4LoginManager.cs" />
-    <Compile Include="Assets\Scripts\PlayerInput.cs" />
-    <Compile Include="Assets\Scripts\PlayerLoginManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerNumbers.cs" />
-    <Compile Include="Assets\Scripts\PlayerToControllerAssigner.cs" />
     <Compile Include="Assets\Scripts\RewiredPlayerLoginManager.cs" />
     <Compile Include="Assets\Scripts\RightStickControl.cs" />
     <Compile Include="Assets\Scripts\ShieldScript.cs" />

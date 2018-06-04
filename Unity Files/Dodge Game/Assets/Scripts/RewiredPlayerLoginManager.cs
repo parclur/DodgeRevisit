@@ -33,6 +33,8 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
     bool p1Join, p2Join, p3Join, p4Join;
     bool p1Ready, p2Ready, p3Ready, p4Ready;
 
+    bool p1AxisActive, p2AxisActive, p3AxisActive, p4AxisActive;
+
     public GameObject startTextPanel;
 
     public AudioClip buttonClick;
@@ -71,6 +73,11 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         p2Ready = false;
         p3Ready = false;
         p4Ready = false;
+
+        p1AxisActive = false;
+        p2AxisActive = false;
+        p3AxisActive = false;
+        p4AxisActive = false;
 
         startTextPanel.SetActive(false);
 
@@ -157,18 +164,55 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         //Returns "buttons" to their original color
         if (player.GetAxis("LSH") == 0)
         {
-            p1CharacterLeftSelectButton.GetComponent<Graphic>().color = p1Color;
-            p1CharacterRightSelectButton.GetComponent<Graphic>().color = p1Color;
+            if (playerId == 0)
+            {
+                Debug.Log("PlayerID 0");
+                p1AxisActive = false;
 
-            p2CharacterLeftSelectButton.GetComponent<Graphic>().color = p2Color;
-            p2CharacterRightSelectButton.GetComponent<Graphic>().color = p2Color;
+                p1CharacterLeftSelectButton.GetComponent<Graphic>().color = p1Color;
+                p1CharacterRightSelectButton.GetComponent<Graphic>().color = p1Color;
+            }
 
-            p3CharacterLeftSelectButton.GetComponent<Graphic>().color = p3Color;
-            p3CharacterRightSelectButton.GetComponent<Graphic>().color = p3Color;
+            if (playerId == 1)
+            {
+                Debug.Log("PlayerID 1");
+                p2AxisActive = false;
 
-            p4CharacterLeftSelectButton.GetComponent<Graphic>().color = p4Color;
-            p4CharacterRightSelectButton.GetComponent<Graphic>().color = p4Color;
+                p2CharacterLeftSelectButton.GetComponent<Graphic>().color = p2Color;
+                p2CharacterRightSelectButton.GetComponent<Graphic>().color = p2Color;
+            }
+
+            if (playerId == 2)
+            {
+                Debug.Log("PlayerID 2");
+                p3AxisActive = false;
+
+                p3CharacterLeftSelectButton.GetComponent<Graphic>().color = p3Color;
+                p3CharacterRightSelectButton.GetComponent<Graphic>().color = p3Color;
+            }
+
+            if (playerId == 3)
+            {
+                Debug.Log("PlayerID 3");
+                p4AxisActive = false;
+
+                p4CharacterLeftSelectButton.GetComponent<Graphic>().color = p4Color;
+                p4CharacterRightSelectButton.GetComponent<Graphic>().color = p4Color;
+            }
         }
+
+
+        /*
+        //Makes the axis like a button and only moved once
+        if (player.GetAxis("LSV") != 0)
+        {
+            if (!axisActive)
+            {
+                MoveCursor();
+                axisActive = true;
+            }
+        }
+        */
 
         //character select right
         if (player.GetAxis("LSH") == -1 || player.GetAxis("LSH") == 1)
@@ -179,133 +223,149 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
                 //Player 1
                 case 0:
                     //Debug.Log("State: " + p1State);
-                    //Only let the player change their character in the character select state
-                    if (p1State == 1)
+                    if (!p1AxisActive)
                     {
-                        //Changes the color of the correct button
-                        if (player.GetAxis("LSH") == -1 && playerId == 0)
+                        //Only let the player change their character in the character select state
+                        if (p1State == 1)
                         {
-                            p1CharacterLeftSelectButton.GetComponent<Graphic>().color = p1SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
-                        if (player.GetAxis("LSH") == 1 && playerId == 0)
-                        {
-                            p1CharacterRightSelectButton.GetComponent<Graphic>().color = p1SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
+                            //Changes the color of the correct button
+                            if (player.GetAxis("LSH") == -1 && playerId == 0)
+                            {
+                                p1CharacterLeftSelectButton.GetComponent<Graphic>().color = p1SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
+                            if (player.GetAxis("LSH") == 1 && playerId == 0)
+                            {
+                                p1CharacterRightSelectButton.GetComponent<Graphic>().color = p1SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
 
-                        //Changes the player's character
-                        if (p1CharacterClass == 0) //switching from the striker to the blocker
-                        {
-                            p1CharacterClass = 1;
-                            p1StrikerCharacter.SetActive(false);
-                            p1BlockerCharacter.SetActive(true);
+                            //Changes the player's character
+                            if (p1CharacterClass == 0) //switching from the striker to the blocker
+                            {
+                                p1CharacterClass = 1;
+                                p1StrikerCharacter.SetActive(false);
+                                p1BlockerCharacter.SetActive(true);
+                            }
+                            else if (p1CharacterClass == 1) //switching from the blocker to the striker
+                            {
+                                p1CharacterClass = 0;
+                                p1StrikerCharacter.SetActive(true);
+                                p1BlockerCharacter.SetActive(false);
+                            }
                         }
-                        else if (p1CharacterClass == 1) //switching from the blocker to the striker
-                        {
-                            p1CharacterClass = 0;
-                            p1StrikerCharacter.SetActive(true);
-                            p1BlockerCharacter.SetActive(false);
-                        }
+                        p1AxisActive = true;
                     }
                     break;
 
                 //Player 2
                 case 1:
-                    //Only let the player change their character in the character select state
-                    if (p2State == 1)
+                    if (!p2AxisActive)
                     {
-                        //Changes the color of the correct button
-                        if (player.GetAxis("LSH") == -1 && playerId == 1)
+                        //Only let the player change their character in the character select state
+                        if (p2State == 1)
                         {
-                            p2CharacterLeftSelectButton.GetComponent<Graphic>().color = p2SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
-                        if (player.GetAxis("LSH") == 1 && playerId == 1)
-                        {
-                            p2CharacterRightSelectButton.GetComponent<Graphic>().color = p2SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
+                            //Changes the color of the correct button
+                            if (player.GetAxis("LSH") == -1 && playerId == 1)
+                            {
+                                p2CharacterLeftSelectButton.GetComponent<Graphic>().color = p2SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
+                            if (player.GetAxis("LSH") == 1 && playerId == 1)
+                            {
+                                p2CharacterRightSelectButton.GetComponent<Graphic>().color = p2SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
 
-                        //Changes the player's character
-                        if (p2CharacterClass == 0) //switching from the striker to the blocker
-                        {
-                            p2CharacterClass = 1;
-                            p2StrikerCharacter.SetActive(false);
-                            p2BlockerCharacter.SetActive(true);
+                            //Changes the player's character
+                            if (p2CharacterClass == 0) //switching from the striker to the blocker
+                            {
+                                p2CharacterClass = 1;
+                                p2StrikerCharacter.SetActive(false);
+                                p2BlockerCharacter.SetActive(true);
+                            }
+                            else if (p2CharacterClass == 1) //switching from the blocker to the striker
+                            {
+                                p2CharacterClass = 0;
+                                p2StrikerCharacter.SetActive(true);
+                                p2BlockerCharacter.SetActive(false);
+                            }
                         }
-                        else if (p2CharacterClass == 1) //switching from the blocker to the striker
-                        {
-                            p2CharacterClass = 0;
-                            p2StrikerCharacter.SetActive(true);
-                            p2BlockerCharacter.SetActive(false);
-                        }
+                        p2AxisActive = true;
                     }
                     break;
 
                 //Player 3
                 case 2:
-                    //Only let the player change their character in the character select state
-                    if (p3State == 1)
+                    if (!p3AxisActive)
                     {
-                        //Changes the color of the correct button
-                        if (player.GetAxis("LSH") == -1 && playerId == 2)
+                        //Only let the player change their character in the character select state
+                        if (p3State == 1)
                         {
-                            p3CharacterLeftSelectButton.GetComponent<Graphic>().color = p3SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
-                        if (player.GetAxis("LSH") == 1 && playerId == 2)
-                        {
-                            p3CharacterRightSelectButton.GetComponent<Graphic>().color = p3SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
+                            //Changes the color of the correct button
+                            if (player.GetAxis("LSH") == -1 && playerId == 2)
+                            {
+                                p3CharacterLeftSelectButton.GetComponent<Graphic>().color = p3SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
+                            if (player.GetAxis("LSH") == 1 && playerId == 2)
+                            {
+                                p3CharacterRightSelectButton.GetComponent<Graphic>().color = p3SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
 
-                        //Changes the player's character
-                        if (p3CharacterClass == 0) //switching from the striker to the blocker
-                        {
-                            p3CharacterClass = 1;
-                            p3StrikerCharacter.SetActive(false);
-                            p3BlockerCharacter.SetActive(true);
+                            //Changes the player's character
+                            if (p3CharacterClass == 0) //switching from the striker to the blocker
+                            {
+                                p3CharacterClass = 1;
+                                p3StrikerCharacter.SetActive(false);
+                                p3BlockerCharacter.SetActive(true);
+                            }
+                            else if (p1CharacterClass == 1) //switching from the blocker to the striker
+                            {
+                                p3CharacterClass = 0;
+                                p3StrikerCharacter.SetActive(true);
+                                p3BlockerCharacter.SetActive(false);
+                            }
                         }
-                        else if (p1CharacterClass == 1) //switching from the blocker to the striker
-                        {
-                            p3CharacterClass = 0;
-                            p3StrikerCharacter.SetActive(true);
-                            p3BlockerCharacter.SetActive(false);
-                        }
+                        p3AxisActive = true;
                     }
                     break;
 
                 //Player 4
                 case 3:
-                    //Only let the player change their character in the character select state
-                    if (p4State == 1)
+                    if (!p4AxisActive)
                     {
-                        //Changes the color of the correct button
-                        if (player.GetAxis("LSH") == -1 && playerId == 3)
+                        //Only let the player change their character in the character select state
+                        if (p4State == 1)
                         {
-                            p4CharacterLeftSelectButton.GetComponent<Graphic>().color = p4SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
-                        if (player.GetAxis("LSH") == 1 && playerId == 3)
-                        {
-                            p4CharacterRightSelectButton.GetComponent<Graphic>().color = p4SelectedColor;
-                            buttonClickSound.PlayOneShot(buttonClick, 1f);
-                        }
+                            //Changes the color of the correct button
+                            if (player.GetAxis("LSH") == -1 && playerId == 3)
+                            {
+                                p4CharacterLeftSelectButton.GetComponent<Graphic>().color = p4SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
+                            if (player.GetAxis("LSH") == 1 && playerId == 3)
+                            {
+                                p4CharacterRightSelectButton.GetComponent<Graphic>().color = p4SelectedColor;
+                                buttonClickSound.PlayOneShot(buttonClick, 1f);
+                            }
 
-                        //Changes the player's character
-                        if (p4CharacterClass == 0) //switching from the striker to the blocker
-                        {
-                            p4CharacterClass = 1;
-                            p4StrikerCharacter.SetActive(false);
-                            p4BlockerCharacter.SetActive(true);
+                            //Changes the player's character
+                            if (p4CharacterClass == 0) //switching from the striker to the blocker
+                            {
+                                p4CharacterClass = 1;
+                                p4StrikerCharacter.SetActive(false);
+                                p4BlockerCharacter.SetActive(true);
+                            }
+                            else if (p4CharacterClass == 1) //switching from the blocker to the striker
+                            {
+                                p4CharacterClass = 0;
+                                p4StrikerCharacter.SetActive(true);
+                                p4BlockerCharacter.SetActive(false);
+                            }
                         }
-                        else if (p4CharacterClass == 1) //switching from the blocker to the striker
-                        {
-                            p4CharacterClass = 0;
-                            p4StrikerCharacter.SetActive(true);
-                            p4BlockerCharacter.SetActive(false);
-                        }
+                        p4AxisActive = true;
                     }
                     break;
             }

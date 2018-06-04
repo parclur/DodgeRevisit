@@ -56,7 +56,7 @@ public class CameraPanScript : MonoBehaviour {
 
 		foreach (GameObject player in players){
 			Vector3 tempPlayer = player.transform.position;
-			if (player.GetComponent<PlayerMovement> ().isOut == false) {
+			if (player.GetComponent<PlayerInfoScript> ().isOut == false) {
 				if (tempPlayer.x < minX) {
 					minX = tempPlayer.x;
 				}
@@ -81,7 +81,7 @@ public class CameraPanScript : MonoBehaviour {
 		Vector3 finalPos;
 
 		foreach (GameObject player in players) {
-			if (player.GetComponent<PlayerMovement>().isOut == false){
+			if (player.GetComponent<PlayerInfoScript>().isOut == false){
 				center += player.transform.position;
 			}
 

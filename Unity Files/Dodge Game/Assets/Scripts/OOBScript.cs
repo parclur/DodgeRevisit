@@ -24,7 +24,7 @@ public class OOBScript : MonoBehaviour {
         }
         if(col.gameObject.layer == 8)
         {
-            col.gameObject.GetComponent<PlayerMovement>().ResetPos();
+            col.gameObject.GetComponent<PlayerInfoScript>().ResetPos();
         }
     }
 }

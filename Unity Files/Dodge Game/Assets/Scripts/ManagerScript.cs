@@ -280,7 +280,7 @@ public class ManagerScript : MonoBehaviour {
 
         for (int i = 0; i < totalTeamMembers; i++)
         {
-            if(team1Players[i].GetComponent<PlayerMovement>().isOut)
+            if(team1Players[i].GetComponent<PlayerInfoScript>().isOut)
                 teamMemebersOut++;
 
             if(teamMemebersOut >= totalTeamMembers)
@@ -309,7 +309,7 @@ public class ManagerScript : MonoBehaviour {
 
         for (int i = 0; i < totalTeamMembers; i++)
         {
-            if (team2Players[i].GetComponent<PlayerMovement>().isOut)
+            if (team2Players[i].GetComponent<PlayerInfoScript>().isOut)
                 teamMemebersOut++;
 
             if (teamMemebersOut >= totalTeamMembers)
@@ -361,12 +361,12 @@ public class ManagerScript : MonoBehaviour {
             for (int i = 0; i < sizeOfTeam1; i++)
             {
                 // set the positions
-                team1Players[i].GetComponent<PlayerMovement>().ResetPlayer();
+                team1Players[i].GetComponent<PlayerInfoScript>().ResetPlayer();
             }
 
             for (int i = 0; i < sizeOfTeam2; i++)
             {
-                team2Players[i].GetComponent<PlayerMovement>().ResetPlayer();
+                team2Players[i].GetComponent<PlayerInfoScript>().ResetPlayer();
             }
 
             int amountOfBalls = 4;

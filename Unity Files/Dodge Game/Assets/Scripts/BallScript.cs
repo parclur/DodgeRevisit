@@ -142,7 +142,7 @@ public class BallScript : MonoBehaviour {
     {
         thrower = player;
         possessorName = player.name;
-        possession = thrower.GetComponent<PlayerMovement>().team;
+        possession = thrower.GetComponent<PlayerInfoScript>().infoTeam;
         maxBounces = 3;
     }
 

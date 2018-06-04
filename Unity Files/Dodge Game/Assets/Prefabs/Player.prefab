@@ -37,6 +37,8 @@ GameObject:
   - component: {fileID: 224853251109952416}
   - component: {fileID: 212292273750782474}
   - component: {fileID: 114929803305666498}
+  - component: {fileID: 114261157327007522}
+  - component: {fileID: 114162042639682924}
   - component: {fileID: 50295027229346088}
   - component: {fileID: 61025229156414620}
   - component: {fileID: 95192168707725616}
@@ -196,6 +198,50 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114162042639682924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1716472380115652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69043db471bd8e548ac186440cc6eb5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoTeam: 0
+  characterClass: 0
+  playerNum: 0
+  ableToSpawn: 0
+  isOut: 0
+  playerHor: LSH
+  playerVer: LSV
+  playerJump: A
+  playerPickup: X
+  playerAimHor: RSH
+  playerAimVer: RSV
+  playerThrow: RT
+  playerShield: LT
+  ballPrefab: {fileID: 1133825204610308, guid: 1690ca27877616f47a5e697c87e4dcd1, type: 2}
+  ballUI: {fileID: 1865808414279996}
+--- !u!114 &114261157327007522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1716472380115652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085ef748437f20449a514fa2223bfc3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillActive: 0
+  ableToThrow: 0
+  ableToPickUp: 1
+  ableToShield: 1
+  shieldPrefab: {fileID: 1288964514461226, guid: 24d1fa10d099e6248a7b9d55bafb094e,
+    type: 2}
+  rechargeUI: {fileID: 1281344016465330}
 --- !u!114 &114929803305666498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,7 +261,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   pickupRad: {fileID: 58534694573563408}
-  isOut: 0
   ballPrefab: {fileID: 1133825204610308, guid: 1690ca27877616f47a5e697c87e4dcd1, type: 2}
   shieldPrefab: {fileID: 1288964514461226, guid: 24d1fa10d099e6248a7b9d55bafb094e,
     type: 2}
@@ -223,9 +268,7 @@ MonoBehaviour:
     type: 2}
   explosionPrefab: {fileID: 1908493609706840, guid: 09ee5f07f4dd8ad45b619426a3a140fb,
     type: 2}
-  team: 1
   characterClass: 0
-  ballUI: {fileID: 1865808414279996}
   rechargeUI: {fileID: 1281344016465330}
 --- !u!212 &212292273750782474
 SpriteRenderer:

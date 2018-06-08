@@ -291,6 +291,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\OptionsManager.cs" />
     <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
     <Compile Include="Assets\Rewired\Examples\CustomControllersTilt\Scripts\CustomControllersTiltDemo.cs" />
     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
@@ -346,17 +347,17 @@
     <Compile Include="Assets\Scripts\BallScript.cs" />
     <Compile Include="Assets\Scripts\BallTrailScript.cs" />
     <Compile Include="Assets\Scripts\CameraPanScript.cs" />
-    <Compile Include="Assets\Scripts\ControllerManager.cs" />
     <Compile Include="Assets\Scripts\EndSceneUIData.cs" />
     <Compile Include="Assets\Scripts\EndScript.cs" />
+    <Compile Include="Assets\Scripts\GameOptionsManager.cs" />
     <Compile Include="Assets\Scripts\GroundCheckScript.cs" />
-    <Compile Include="Assets\Scripts\LevelSelectionManager.cs" />
     <Compile Include="Assets\Scripts\ManagerScript.cs" />
     <Compile Include="Assets\Scripts\OOBScript.cs" />
+    <Compile Include="Assets\Scripts\PlayerInfoScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerNumbers.cs" />
+    <Compile Include="Assets\Scripts\PlayerSkillScript.cs" />
     <Compile Include="Assets\Scripts\RewiredPlayerLoginManager.cs" />
-    <Compile Include="Assets\Scripts\RightStickControl.cs" />
     <Compile Include="Assets\Scripts\ShieldScript.cs" />
     <Compile Include="Assets\Scripts\StartScript.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />

@@ -19,20 +19,25 @@ public class ManagerScript : MonoBehaviour {
     public GameObject player3;
     public GameObject player4;
 
-    public int player1Kills;
-    public int player2Kills;
-    public int player3Kills;
-    public int player4Kills;
+    bool p1CanSpawn = true;
+    bool p2CanSpawn = false;
+    bool p3CanSpawn = false;
+    bool p4CanSpawn = false;
 
-    public int player1Deaths;
-    public int player2Deaths;
-    public int player3Deaths;
-    public int player4Deaths;
+    int player1Kills;
+    int player2Kills;
+    int player3Kills;
+    int player4Kills;
 
-    int player1Class;
-    int player2Class;
-    int player3Class;
-    int player4Class;
+    int player1Deaths;
+    int player2Deaths;
+    int player3Deaths;
+    int player4Deaths;
+
+    public int player1Class;
+    public int player2Class;
+    public int player3Class;
+    public int player4Class;
 
     public List<GameObject> team1Players = new List<GameObject>();
     public int sizeOfTeam1 = 0;
@@ -167,6 +172,29 @@ public class ManagerScript : MonoBehaviour {
     public void SetPlayerAmount(int numPlayers)
     {
         playerAmount = numPlayers;
+    }
+
+    public void SetPlayerAbleToSpawn(string playerTag, bool ableTo)
+    {
+        if(playerTag == "Player1")
+        {
+            p1CanSpawn = ableTo;
+        }
+        else if (playerTag == "Player2")
+        {
+            p2CanSpawn = ableTo;
+
+        }
+        else if (playerTag == "Player3")
+        {
+            p3CanSpawn = ableTo;
+
+        }
+        else if (playerTag == "Player4")
+        {
+            p4CanSpawn = ableTo;
+
+        }
     }
 
     public int GetNumPlayers()

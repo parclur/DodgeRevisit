@@ -41,6 +41,7 @@ public class PlayerInfoScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        SetPlayerNum();
         spriteRen = GetComponent<SpriteRenderer>();
 	}
 	

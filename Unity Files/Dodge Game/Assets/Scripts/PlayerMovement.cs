@@ -94,6 +94,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (!GetComponent<PlayerInfoScript>().isOut)
         {
+            Debug.Log(name + " is not out");
             gameObject.SetActive(true);
 
             //SetCursor();
@@ -193,7 +194,7 @@ public class PlayerMovement : MonoBehaviour {
 	void CheckPickup()
 	{
 		if (//Input.GetAxis (playerPickup) != 0 && ableToPickUp
-            pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerPickup) != 0 && ableToPickUp
+            pmPlayer.GetButton(GetComponent<PlayerInfoScript>().playerPickup) && ableToPickUp
             )
         {
 			ableToPickUp = false;
@@ -211,7 +212,7 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		}
         else if (// Input.GetAxis (playerPickup) == 0 && !ableToPickUp
-                 pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerPickup) == 0 && !ableToPickUp
+                 !pmPlayer.GetButton(GetComponent<PlayerInfoScript>().playerPickup) && !ableToPickUp
                 )
         {
 			StartCoroutine(AbleToPickUpAgain());

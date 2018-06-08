@@ -7,8 +7,15 @@ using Rewired;
 
 public class RewiredPlayerLoginManager : MonoBehaviour {
 
-    public int playerId;
-    private Rewired.Player player;
+    public int playerId1 = 0;
+    public int playerId2 = 1;
+    public int playerId3 = 2;
+    public int playerId4 = 3;
+
+    private Rewired.Player player1;
+    private Rewired.Player player2;
+    private Rewired.Player player3;
+    private Rewired.Player player4;
 
     public static int numberOfPlayers = 0;
     public static int p1CharacterClass = 0, p2CharacterClass = 0, p3CharacterClass = 0, p4CharacterClass = 0;
@@ -42,7 +49,11 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
 
     void Start()
     {
-        player = ReInput.players.GetPlayer(playerId);
+        player1 = ReInput.players.GetPlayer(playerId1);
+        player2 = ReInput.players.GetPlayer(playerId2);
+        player3 = ReInput.players.GetPlayer(playerId3);
+        player4 = ReInput.players.GetPlayer(playerId4);
+
 
         p1State = 0;
         p2State = 0;
@@ -85,6 +96,20 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
     }
 
     void Update()
+    {
+        PlayerLogIn(player1, playerId1);
+        PlayerLogIn(player2, playerId2);
+        PlayerLogIn(player3, playerId3);
+        PlayerLogIn(player4, playerId4);
+
+        //Hot Key to start game
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SceneManager.LoadScene("Level_Select");
+        }
+    }
+
+    void PlayerLogIn(Rewired.Player player, int playerId)
     {
         //Advances the player through the menu
         if (player.GetButtonDown("A"))
@@ -158,6 +183,12 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         if (CheckReadyPlayers() && player.GetButtonDown("Start"))
         {
             Debug.Log("Start Game with " + numberOfPlayers + " Players");
+
+            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player1", p1Join);
+            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player2", p2Join);
+            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player3", p3Join);
+            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player4", p4Join);
+
             SceneManager.LoadScene("Level_Select");
         }
 
@@ -166,7 +197,7 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         {
             if (playerId == 0)
             {
-                Debug.Log("PlayerID 0");
+                //Debug.Log("PlayerID 0");
                 p1AxisActive = false;
 
                 p1CharacterLeftSelectButton.GetComponent<Graphic>().color = p1Color;
@@ -175,7 +206,7 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
 
             if (playerId == 1)
             {
-                Debug.Log("PlayerID 1");
+                //Debug.Log("PlayerID 1");
                 p2AxisActive = false;
 
                 p2CharacterLeftSelectButton.GetComponent<Graphic>().color = p2Color;
@@ -184,7 +215,7 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
 
             if (playerId == 2)
             {
-                Debug.Log("PlayerID 2");
+                //Debug.Log("PlayerID 2");
                 p3AxisActive = false;
 
                 p3CharacterLeftSelectButton.GetComponent<Graphic>().color = p3Color;
@@ -193,7 +224,7 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
 
             if (playerId == 3)
             {
-                Debug.Log("PlayerID 3");
+               //Debug.Log("PlayerID 3");
                 p4AxisActive = false;
 
                 p4CharacterLeftSelectButton.GetComponent<Graphic>().color = p4Color;
@@ -371,11 +402,6 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
             }
         }
 
-        //Hot Key to start game
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            SceneManager.LoadScene("Level_Select");
-        }
     }
 
     void Player1State()
@@ -486,7 +512,7 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
                 //show "Press A to Join"
                 p3JoinText.SetActive(true);
                 p3Panel.SetActive(false);
-                p2Join = false;
+                p3Join = false;
                 break;
 
             //Character select state
@@ -496,8 +522,8 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
                 p3JoinText.SetActive(false);
                 p3Panel.SetActive(true);
                 p3ReadyText.SetActive(false);
-                p2Join = true;
-                p2Ready = false;
+                p3Join = true;
+                p3Ready = false;
                 break;
 
             //Ready state
@@ -505,7 +531,7 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
                 //Debug.Log("State: " + p1State);
                 //show ready text and advance if all joined players are
                 p3ReadyText.SetActive(true);
-                p2Ready = true;
+                p3Ready = true;
                 numberOfPlayers = 3;
                 GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAmount(numberOfPlayers);
                 break;

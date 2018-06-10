@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
 
@@ -31,7 +32,6 @@ public class PlayerInfoScript : MonoBehaviour {
     int maxBalls = 1;
 
     Rewired.Player player;
-    CharacterController charController;
 
     SpriteRenderer spriteRen;
     Animator anim;
@@ -41,60 +41,75 @@ public class PlayerInfoScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        InitPlayer();
+        characterClass = GameObject.Find("GameManager").GetComponent<ManagerScript>().GetPlayerClass(tag);
+        ableToSpawn = GameObject.Find("GameManager").GetComponent<ManagerScript>().GetPlayerAbilityToSpawn(tag);
         SetPlayerNum();
         spriteRen = GetComponent<SpriteRenderer>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        anim = GetComponent<Animator>();
+        anim.SetInteger("CharacterClass", characterClass);
+    }
 
-        //anim.SetBool("Throwing", false);
-        //anim.SetBool("Catching", false);
-        //anim.SetBool("Dashing", false);
+    // Update is called once per frame
+    void Update () {
 
-        //anim.SetBool("Throwing", false);
+        anim.SetBool("Throwing", false);
+        anim.SetBool("Catching", false);
+        anim.SetBool("Dashing", false);
+
+        anim.SetBool("Throwing", false);
 
         if (!isOut && ableToSpawn)
         {
-
-            if (!isOut && ableToSpawn)
-            {
-                gameObject.SetActive(true);
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
-
+            gameObject.SetActive(true);
         }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void SetTeam(int teamNum)
+    {
+        infoTeam = teamNum;
+    }
+
+    public void SetBallName(string newName)
+    {
+        ballSavedName = newName;
+    }
+
+    public void IncreaseBalls()
+    {
+        numBalls++;
     }
 
     void SetPlayerNum()
     {
+        
         if (tag == "Player1")
         {
             playerNum = 0;
-
+            infoTeam = 1;
         }
         else if (tag == "Player2")
         {
             playerNum = 1;
-
+            infoTeam = 2;
         }
         else if (tag == "Player3")
         {
             playerNum = 2;
-
+            infoTeam = 1;
         }
         else if (tag == "Player4")
         {
             playerNum = 3;
-
+            infoTeam = 2;
         }
 
         player = ReInput.players.GetPlayer(playerNum);
 
-        charController = GetComponent<CharacterController>();
     }
 
     public void KillPlayer()
@@ -135,7 +150,8 @@ public class PlayerInfoScript : MonoBehaviour {
 
             gameObject.SetActive(true);
             anim.SetInteger("CharacterClass", characterClass);
-
+            
+            isOut = false;
         }
 
     }
@@ -147,64 +163,19 @@ public class PlayerInfoScript : MonoBehaviour {
 
         if (gameObject.tag == "Player1")
         {
-            if (GameObject.Find("GameManager").GetComponent<ManagerScript>().GetNumPlayers() >= 1)
-            {
-                ableToSpawn = true;
-            }
-            else
-            {
-                ableToSpawn = false;
-            }
-
             spawn = GameObject.Find("Player_Start_Point_Blue_1").transform.position;
-
         }
         else if (gameObject.tag == "Player2")
         {
-            if (GameObject.Find("GameManager").GetComponent<ManagerScript>().GetNumPlayers() >= 2 || 
-                GameObject.Find("GameManager").GetComponent<ManagerScript>().GetNumPlayers() == 1)
-            {
-                ableToSpawn = true;
-            }
-            else
-            {
-                ableToSpawn = false;
-            }
-
             spawn = GameObject.Find("Player_Start_Point_Red_1").transform.position;
-
-
         }
         else if (gameObject.tag == "Player3")
         {
-            if (GameObject.Find("GameManager").GetComponent<ManagerScript>().GetNumPlayers() >= 3 || 
-                GameObject.Find("GameManager").GetComponent<ManagerScript>().GetNumPlayers() == 1)
-            {
-                ableToSpawn = true;
-            }
-            else
-            {
-                ableToSpawn = false;
-            }
-
             spawn = GameObject.Find("Player_Start_Point_Blue_2").transform.position;
-
-
         }
         else if (gameObject.tag == "Player4")
         {
-            if (GameObject.Find("GameManager").GetComponent<ManagerScript>().GetNumPlayers() >= 4 || 
-                GameObject.Find("GameManager").GetComponent<ManagerScript>().GetNumPlayers() == 1)
-            {
-                ableToSpawn = true;
-            }
-            else
-            {
-                ableToSpawn = false;
-            }
-
             spawn = GameObject.Find("Player_Start_Point_Red_2").transform.position;
-
         }
     }
 

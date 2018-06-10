@@ -36,12 +36,12 @@ GameObject:
   m_Component:
   - component: {fileID: 224853251109952416}
   - component: {fileID: 212292273750782474}
+  - component: {fileID: 95192168707725616}
   - component: {fileID: 114162042639682924}
   - component: {fileID: 114929803305666498}
   - component: {fileID: 114261157327007522}
   - component: {fileID: 50295027229346088}
   - component: {fileID: 61025229156414620}
-  - component: {fileID: 95192168707725616}
   - component: {fileID: 222652143434874728}
   m_Layer: 8
   m_Name: Player
@@ -256,6 +256,7 @@ MonoBehaviour:
   ableToThrow: 0
   ableToPickUp: 1
   ableToShield: 1
+  rightFacing: 0
   onGround: 0
   ground:
     serializedVersion: 2
@@ -270,6 +271,14 @@ MonoBehaviour:
     type: 2}
   characterClass: 0
   rechargeUI: {fileID: 1281344016465330}
+  playerHor: LSH
+  playerVer: LSV
+  playerJump: A
+  playerPickup: X
+  playerAimHor: RSH
+  playerAimVer: RSV
+  playerThrow: RT
+  playerShield: LT
 --- !u!212 &212292273750782474
 SpriteRenderer:
   m_ObjectHideFlags: 1

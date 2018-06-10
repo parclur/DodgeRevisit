@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool ableToThrow = false;
     public bool ableToPickUp = true;
     public bool ableToShield = true;
-    bool rightFacing;
+    public bool rightFacing = true;
     bool ableToJump = true;
 
     public bool onGround;
@@ -50,13 +50,23 @@ public class PlayerMovement : MonoBehaviour {
 	bool aDown = false;
 
     Rewired.Player pmPlayer;
-    CharacterController pmController;
 
-	// Use this for initialization
-	void Start () {
-		
-		if (GetComponent<PlayerInfoScript>().ableToSpawn) {
-            characterClass = GameObject.Find ("GameManager").GetComponent<ManagerScript> ().GetPlayerClass (gameObject.name);
+    // the name for the player's controls
+    public string playerHor = "LSH";
+    public string playerVer = "LSV";
+    public string playerJump = "A";
+    public string playerPickup = "X";
+    public string playerAimHor = "RSH";
+    public string playerAimVer = "RSV";
+    public string playerThrow = "RT";
+    public string playerShield = "LT";
+
+    // Use this for initialization
+    void Start () {
+        characterClass = GameObject.Find("GameManager").GetComponent<ManagerScript>().GetPlayerClass(gameObject.name);
+
+        if (GetComponent<PlayerInfoScript>().ableToSpawn) {
+            //characterClass = GameObject.Find ("GameManager").GetComponent<ManagerScript> ().GetPlayerClass (gameObject.name);
 
             pmPlayer = ReInput.players.GetPlayer(GetComponent<PlayerInfoScript>().playerNum);
 
@@ -94,7 +104,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (!GetComponent<PlayerInfoScript>().isOut)
         {
-            Debug.Log(name + " is not out");
+            //Debug.Log(name + " is not out");
             gameObject.SetActive(true);
 
             //SetCursor();
@@ -102,7 +112,7 @@ public class PlayerMovement : MonoBehaviour {
             CheckPickup();
             CheckMove();
 
-            if(pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerShield)<1)
+            if(pmPlayer.GetAxis(playerShield) < 1)
             {
                 CheckThrow();
             }
@@ -113,10 +123,10 @@ public class PlayerMovement : MonoBehaviour {
     {
         // float xMove = Input.GetAxis(playerHor);
         // float yMove = Input.GetAxis(playerJump);
-        float xMove = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerHor);
-        float yMove = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerJump);
+        float xMove = pmPlayer.GetAxis(playerHor);
+        float yMove = pmPlayer.GetAxis(playerJump);
 
-        Debug.Log(xMove);
+        //Debug.Log(xMove);
 
         rig.velocity = new Vector2(xMove * playerSpeed * speedMultiplier, rig.velocity.y);
 
@@ -169,15 +179,15 @@ public class PlayerMovement : MonoBehaviour {
             if (rcLeft.transform != null || rcRight.transform != null || rcCenter.transform != null)
             {
                 onGround = true;
-                //anim.SetInteger("State", (int)State.IDLE);
+                anim.SetInteger("State", (int)State.IDLE);
             }
             else
 			{
 				onGround = false;
-				/*if (anim.GetInteger("State") == (int)State.RUNNING)
+				if (anim.GetInteger("State") == (int)State.RUNNING)
 				{
 					anim.SetInteger ("State", (int)State.IDLE);
-				}*/
+				}
 			}
 		}
 		else
@@ -203,16 +213,17 @@ public class PlayerMovement : MonoBehaviour {
 			Collider2D[] hits = Physics2D.OverlapCircleAll (pickupRad.bounds.center, pickupRad.radius, LayerMask.GetMask ("Ball"));
 			for (int i = 0; i < hits.GetLength (0) && numBalls < maxBalls; i++) {
 				ballSavedName = hits [i].gameObject.name;
+                GetComponent<PlayerInfoScript>().SetBallName(hits[i].gameObject.name);
 				numBalls++;
 				Destroy (hits [i].gameObject);
-				//anim.SetBool ("Catching", true);
+				anim.SetBool ("Catching", true);
 
                 GetComponent<PlayerInfoScript>().ballUI.SetActive(true);
 
 			}
 		}
         else if (// Input.GetAxis (playerPickup) == 0 && !ableToPickUp
-                 !pmPlayer.GetButton(GetComponent<PlayerInfoScript>().playerPickup) && !ableToPickUp
+                 !pmPlayer.GetButton(playerPickup) && !ableToPickUp
                 )
         {
 			StartCoroutine(AbleToPickUpAgain());
@@ -252,11 +263,11 @@ public class PlayerMovement : MonoBehaviour {
 	{
 
         if (//Input.GetAxis(playerThrow) != 0 && numBalls > 0 && ableToThrow
-            pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerThrow) > 0 && ableToThrow
+            pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerThrow) > 0 && ableToThrow && numBalls > 0
             )
 		{
 
-			//anim.SetBool ("Throwing", true);
+			anim.SetBool ("Throwing", true);
             GetComponent<PlayerInfoScript>().ballUI.SetActive(false);
 
             //float xMag = Input.GetAxis(playerAimHor);
@@ -303,7 +314,7 @@ public class PlayerMovement : MonoBehaviour {
             }
             else if(xMag < 0)
             {
-                sr.flipX = true; ;
+                sr.flipX = true; 
                 rightFacing = false;
 
                 spawnX = gameObject.transform.position.x - 1.0f;
@@ -335,7 +346,7 @@ public class PlayerMovement : MonoBehaviour {
             ableToThrow = false;
 		}
 
-        if(numBalls != 0)
+        if(numBalls > 0)
             StartCoroutine(AbleToShootAgain());
 
     }

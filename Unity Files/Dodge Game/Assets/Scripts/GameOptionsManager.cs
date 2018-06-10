@@ -67,7 +67,7 @@ public class GameOptionsManager : MonoBehaviour
         //Things to check every loop
         numberOfRoundsText.text = numberOfRounds.ToString();
         GameObject.Find("GameManager").GetComponent<ManagerScript>().SetMaxRounds(numberOfRounds);
-        Debug.Log(currentLevel + " " + currentLevelName);
+        //Debug.Log(currentLevel + " " + currentLevelName);
 
         //Advances the player through the menu
         if (player.GetButtonDown("A"))
@@ -244,7 +244,7 @@ public class GameOptionsManager : MonoBehaviour
 
             //Level Selection
             case 1:
-                Debug.Log("Level Selection");
+                //Debug.Log("Level Selection");
                 currentLevel = 1;
                 currentLevelName = "Level1";
                 level1.GetComponent<Graphic>().color = selectedLevelColor;

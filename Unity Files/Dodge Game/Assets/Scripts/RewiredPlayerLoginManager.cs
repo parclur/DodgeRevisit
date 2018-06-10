@@ -184,10 +184,34 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         {
             Debug.Log("Start Game with " + numberOfPlayers + " Players");
 
-            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player1", p1Join);
-            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player2", p2Join);
-            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player3", p3Join);
-            GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player4", p4Join);
+            if (numberOfPlayers == 1)
+            {
+
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player1", true);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player2", true);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player3", true);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player4", true);
+
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player1", p1CharacterClass);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player2", p2CharacterClass);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player3", p3CharacterClass);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player4", p4CharacterClass);
+
+
+            }
+            else
+            {
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player1", p1Join);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player2", p2Join);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player3", p3Join);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerAbleToSpawn("Player4", p4Join);
+
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player1", p1CharacterClass);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player2", p2CharacterClass);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player3", p3CharacterClass);
+                GameObject.Find("GameManager").GetComponent<ManagerScript>().SetPlayerClass("Player4", p4CharacterClass);
+
+            }
 
             SceneManager.LoadScene("Level_Select");
         }

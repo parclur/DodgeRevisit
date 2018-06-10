@@ -20,9 +20,9 @@ public class ManagerScript : MonoBehaviour {
     public GameObject player4;
 
     bool p1CanSpawn = true;
-    bool p2CanSpawn = false;
-    bool p3CanSpawn = false;
-    bool p4CanSpawn = false;
+    bool p2CanSpawn = true;
+    bool p3CanSpawn = true;
+    bool p4CanSpawn = true;
 
     int player1Kills;
     int player2Kills;
@@ -137,8 +137,6 @@ public class ManagerScript : MonoBehaviour {
         onLevel = false;
         endofRound = false;
 
-
-
         player1 = null;
         player2 = null;
         player3 = null;
@@ -195,6 +193,28 @@ public class ManagerScript : MonoBehaviour {
             p4CanSpawn = ableTo;
 
         }
+    }
+
+    public bool GetPlayerAbilityToSpawn(string playerTag)
+    {
+        if (playerTag == "Player1")
+        {
+            return p1CanSpawn;
+        }
+        else if (playerTag == "Player2")
+        {
+            return p2CanSpawn;
+        }
+        else if (playerTag == "Player3")
+        {
+            return p3CanSpawn;
+        }
+        else if (playerTag == "Player4")
+        {
+            return p4CanSpawn;
+        }
+        else
+            return true;
     }
 
     public int GetNumPlayers()
@@ -397,15 +417,20 @@ public class ManagerScript : MonoBehaviour {
                 team2Players[i].GetComponent<PlayerInfoScript>().ResetPlayer();
             }
 
+            endofRound = false;
+            canCheck = true;
+            gameRound++;
+
             int amountOfBalls = 4;
 
             for (int i = 1; i <= amountOfBalls; i++)
             {
                 GameObject.Find("Ball" + i).GetComponent<BallScript>().ResetPos();
             }
+
             endofRound = false;
             canCheck = true;
-			gameRound++;
+			//gameRound++;
         }
 
 

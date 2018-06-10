@@ -8,7 +8,7 @@ public class PlayerSkillScript : MonoBehaviour {
     bool canBeHit = true;
     public bool skillActive = false;
 
-    bool rightFacing;
+    bool rightFacing = true;
 
     public bool ableToThrow = false;
     public bool ableToPickUp = true;
@@ -23,19 +23,15 @@ public class PlayerSkillScript : MonoBehaviour {
     public GameObject shieldPrefab;
     public GameObject rechargeUI;
 
-    string playerShield;
-    string playerAimHor;
-    string playerAimVer;
-    string playerHor;
-    string playerVer;
-
-    bool fire;
+    string playerShield = "LT";
+    string playerAimHor = "RSH";
+    string playerAimVer = "RSV";
+    string playerHor = "LSH";
+    string playerVer = "LSV";
 
     Animator anim;
 
-    Vector3 moveVector;
     Rewired.Player player;
-    CharacterController charController;
 
     // Use this for initialization
     void Start () {
@@ -50,27 +46,33 @@ public class PlayerSkillScript : MonoBehaviour {
         shieldPrefab.SetActive(false);
 
         anim = GetComponent<Animator>();
-        //anim.SetInteger("CharacterClass", GetComponent<PlayerInfoScript>().characterClass);
-
-        playerShield = GetComponent<PlayerInfoScript>().playerShield;
-        playerAimHor = GetComponent<PlayerInfoScript>().playerAimHor;
-        playerAimVer = GetComponent<PlayerInfoScript>().playerAimVer;
-        playerHor = GetComponent<PlayerInfoScript>().playerHor;
-        playerVer = GetComponent<PlayerInfoScript>().playerVer;
     }
 
     // Update is called once per frame
     void Update () {
-        anim.SetBool("Dashing", false);
+        player = ReInput.players.GetPlayer(GetComponent<PlayerInfoScript>().playerNum);
+
+        rightFacing = GetComponent<PlayerMovement>().rightFacing;
+
+        //anim.SetBool("Dashing", false);
 
         rechargeUI.SetActive(canCheckDash && ableToShield);
+
+        if(GetComponent<PlayerInfoScript>().characterClass == 0)
+        {
+            Dash();
+        }
+        else if (GetComponent<PlayerInfoScript>().characterClass == 1)
+        {
+            CheckShield();
+        }
     }
 
 
     void CheckShield()
     {
         if (shieldHealth > 0 && //Input.GetAxis(playerShield) > 0
-            player.GetAxis(GetComponent<PlayerInfoScript>().playerShield)>0
+            player.GetAxis(playerShield) > 0
             )
         {
 
@@ -81,10 +83,10 @@ public class PlayerSkillScript : MonoBehaviour {
             //float yMag2 = Input.GetAxis(playerVer);
 
 
-            float xMag = player.GetAxis(GetComponent<PlayerInfoScript>().playerAimHor);
-            float yMag = player.GetAxis(GetComponent<PlayerInfoScript>().playerAimVer);
-            float xMag2 = player.GetAxis(GetComponent<PlayerInfoScript>().playerHor);
-            float yMag2 = player.GetAxis(GetComponent<PlayerInfoScript>().playerVer);
+            float xMag = player.GetAxis(playerAimHor);
+            float yMag = player.GetAxis(playerAimVer);
+            float xMag2 = player.GetAxis(playerHor);
+            float yMag2 = player.GetAxis(playerVer);
 
             // activate the shield
             shieldPrefab.SetActive(true);
@@ -270,7 +272,7 @@ public class PlayerSkillScript : MonoBehaviour {
     void Dash()
     {
         if (dashAmount > 0 && //Input.GetAxis(playerShield) > 0
-            player.GetAxis(GetComponent<PlayerInfoScript>().playerAimVer) > 0 
+            player.GetAxis(playerShield) > 0 
             )
         {
             GetComponent<PlayerMovement>().SetPlayerSpeed(4.0f);
@@ -285,6 +287,10 @@ public class PlayerSkillScript : MonoBehaviour {
 
             canBeHit = false;
             StartCoroutine(NormalSpeed());
+        }
+        else
+        {
+            anim.SetBool("Dashing", false);
         }
 
     }
@@ -341,7 +347,7 @@ public class PlayerSkillScript : MonoBehaviour {
         if (col.otherCollider.transform.tag == "Shield")
         {
             if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 && 
-                col.transform.GetComponent<BallScript>().possession != skillTeam)
+                col.transform.GetComponent<BallScript>().possession != GetComponent<PlayerInfoScript>().infoTeam)
             {
                 col.gameObject.GetComponent<BallScript>().ChangeTeam();
                 col.gameObject.GetComponent<Rigidbody2D>().velocity *= -1;
@@ -353,7 +359,7 @@ public class PlayerSkillScript : MonoBehaviour {
             if (canBeHit)
             {
                 if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 &&
-                    col.transform.GetComponent<BallScript>().possession != skillTeam)
+                    col.transform.GetComponent<BallScript>().possession != GetComponent<PlayerInfoScript>().infoTeam)
                 {
                     GetComponent<PlayerInfoScript>().KillPlayer();
 

@@ -23,7 +23,7 @@ public class PlayerSkillScript : MonoBehaviour {
     public GameObject shieldPrefab;
     public GameObject rechargeUI;
 
-    string playerShield = "LT";
+    string playerSkill = "LT";
     string playerAimHor = "RSH";
     string playerAimVer = "RSV";
     string playerHor = "LSH";
@@ -46,6 +46,8 @@ public class PlayerSkillScript : MonoBehaviour {
         shieldPrefab.SetActive(false);
 
         anim = GetComponent<Animator>();
+        //anim.SetBool("Dashing", false);
+
     }
 
     // Update is called once per frame
@@ -71,8 +73,8 @@ public class PlayerSkillScript : MonoBehaviour {
 
     void CheckShield()
     {
-        if (shieldHealth > 0 && //Input.GetAxis(playerShield) > 0
-            player.GetAxis(playerShield) > 0
+        if (shieldHealth > 0 && //Input.GetAxis(playerSkill) > 0
+            player.GetAxis(playerSkill) > 0
             )
         {
 
@@ -271,8 +273,8 @@ public class PlayerSkillScript : MonoBehaviour {
 
     void Dash()
     {
-        if (dashAmount > 0 && //Input.GetAxis(playerShield) > 0
-            player.GetAxis(playerShield) > 0 
+        if (dashAmount > 0 && //Input.GetAxis(playerSkill) > 0
+            player.GetAxis(playerSkill) > 0 
             )
         {
             GetComponent<PlayerMovement>().SetPlayerSpeed(4.0f);
@@ -290,7 +292,7 @@ public class PlayerSkillScript : MonoBehaviour {
         }
         else
         {
-            anim.SetBool("Dashing", false);
+            //anim.SetBool("Dashing", false);
         }
 
     }
@@ -307,7 +309,7 @@ public class PlayerSkillScript : MonoBehaviour {
             if (GameObject.Find("Ball" + i) != null)
                 Physics2D.IgnoreCollision(GameObject.Find("Ball" + i).GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>(), false);
         }
-
+        //anim.SetBool("Dashing", false);
         StartCoroutine(AbleToDashAgain());
 
     }
@@ -339,6 +341,8 @@ public class PlayerSkillScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.0f);
         dashAmount = 1;
+        anim.SetBool("Dashing", false);
+
     }
 
 

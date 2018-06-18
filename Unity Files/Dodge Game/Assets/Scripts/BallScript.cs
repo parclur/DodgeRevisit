@@ -91,6 +91,7 @@ public class BallScript : MonoBehaviour {
         SetSpawn();
         thrower = null;
         gameObject.transform.position = spawn;
+        possession = 0;
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 

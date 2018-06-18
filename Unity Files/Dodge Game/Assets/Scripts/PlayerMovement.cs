@@ -119,6 +119,11 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    public void DecreaseBall()
+    {
+        numBalls--;
+    }
+
     void CheckMove()
     {
         // float xMove = Input.GetAxis(playerHor);
@@ -192,13 +197,14 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		else
 		{
-			groundTimer -= Time.deltaTime;
+            anim.SetInteger("State", (int)State.JUMPING);
+            groundTimer -= Time.deltaTime;
 			if (groundTimer <= 0f)
 			{
 				groundTimer = 0f;
 			}
-		}
-	}
+        }
+    }
 
 
 	void CheckPickup()
@@ -212,9 +218,13 @@ public class PlayerMovement : MonoBehaviour {
 
 			Collider2D[] hits = Physics2D.OverlapCircleAll (pickupRad.bounds.center, pickupRad.radius, LayerMask.GetMask ("Ball"));
 			for (int i = 0; i < hits.GetLength (0) && numBalls < maxBalls; i++) {
+
 				ballSavedName = hits [i].gameObject.name;
                 GetComponent<PlayerInfoScript>().SetBallName(hits[i].gameObject.name);
+
 				numBalls++;
+                GetComponent<PlayerInfoScript>().IncreaseBalls();
+
 				Destroy (hits [i].gameObject);
 				anim.SetBool ("Catching", true);
 
@@ -343,6 +353,7 @@ public class PlayerMovement : MonoBehaviour {
                 ball.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * xMag2 * 0.5f, throwSpeed * yMag2 * 0.5f);
 
             numBalls--;
+            GetComponent<PlayerInfoScript>().DecreaseBalls();
             ableToThrow = false;
 		}
 

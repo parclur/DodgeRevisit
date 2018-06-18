@@ -84,6 +84,11 @@ public class PlayerInfoScript : MonoBehaviour {
         numBalls++;
     }
 
+    public void DecreaseBalls()
+    {
+        numBalls--;
+    }
+
     void SetPlayerNum()
     {
         
@@ -142,10 +147,13 @@ public class PlayerInfoScript : MonoBehaviour {
 
             if (numBalls > 0)
             {
+                //Debug.Log(numBalls + " is " + name);
                 GameObject ball = Instantiate(ballPrefab);
                 ball.name = ballSavedName;
                 numBalls = 0;
                 ball.GetComponent<BallScript>().ResetPos();
+                GetComponent<PlayerMovement>().DecreaseBall();
+                //Debug.Log(numBalls + name);
             }
 
             gameObject.SetActive(true);

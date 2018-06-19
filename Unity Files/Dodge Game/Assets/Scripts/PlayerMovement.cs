@@ -227,6 +227,7 @@ public class PlayerMovement : MonoBehaviour {
 
 				Destroy (hits [i].gameObject);
 				anim.SetBool ("Catching", true);
+                anim.SetBool("HoldingBall", true);
 
                 GetComponent<PlayerInfoScript>().ballUI.SetActive(true);
 
@@ -346,6 +347,8 @@ public class PlayerMovement : MonoBehaviour {
             ball.GetComponent<BallScript>().possession = GetComponent<PlayerInfoScript>().infoTeam;
 			ball.GetComponent<BallScript>().UpdateColor();
             ball.GetComponent<BallScript>().SetThrower(gameObject);
+
+            anim.SetBool("HoldingBall", false);
 
             if (xMag != 0 || yMag != 0)
                 ball.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * xMag * 0.5f, throwSpeed * yMag * 0.5f);

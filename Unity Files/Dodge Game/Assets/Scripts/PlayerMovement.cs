@@ -66,7 +66,6 @@ public class PlayerMovement : MonoBehaviour {
         characterClass = GameObject.Find("GameManager").GetComponent<ManagerScript>().GetPlayerClass(gameObject.name);
 
         if (GetComponent<PlayerInfoScript>().ableToSpawn) {
-            //characterClass = GameObject.Find ("GameManager").GetComponent<ManagerScript> ().GetPlayerClass (gameObject.name);
 
             pmPlayer = ReInput.players.GetPlayer(GetComponent<PlayerInfoScript>().playerNum);
 
@@ -104,10 +103,9 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (!GetComponent<PlayerInfoScript>().isOut)
         {
-            //Debug.Log(name + " is not out");
             gameObject.SetActive(true);
 
-            //SetCursor();
+            SetCursor();
             CheckGrounded();
             CheckPickup();
             CheckMove();
@@ -126,12 +124,8 @@ public class PlayerMovement : MonoBehaviour {
 
     void CheckMove()
     {
-        // float xMove = Input.GetAxis(playerHor);
-        // float yMove = Input.GetAxis(playerJump);
         float xMove = pmPlayer.GetAxis(playerHor);
         float yMove = pmPlayer.GetAxis(playerJump);
-
-        //Debug.Log(xMove);
 
         rig.velocity = new Vector2(xMove * playerSpeed * speedMultiplier, rig.velocity.y);
 
@@ -209,9 +203,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void CheckPickup()
 	{
-		if (//Input.GetAxis (playerPickup) != 0 && ableToPickUp
-            pmPlayer.GetButton(GetComponent<PlayerInfoScript>().playerPickup) && ableToPickUp
-            )
+		if (pmPlayer.GetButton(GetComponent<PlayerInfoScript>().playerPickup) && ableToPickUp)
         {
 			ableToPickUp = false;
 			ableToThrow = false;
@@ -233,9 +225,7 @@ public class PlayerMovement : MonoBehaviour {
 
 			}
 		}
-        else if (// Input.GetAxis (playerPickup) == 0 && !ableToPickUp
-                 !pmPlayer.GetButton(playerPickup) && !ableToPickUp
-                )
+        else if (!pmPlayer.GetButton(playerPickup) && !ableToPickUp)
         {
 			StartCoroutine(AbleToPickUpAgain());
 		}
@@ -247,22 +237,14 @@ public class PlayerMovement : MonoBehaviour {
         float spawnX;
         float spawnY;
 
-        if(//Mathf.Abs(Input.GetAxis(playerAimHor)) > 0 || Mathf.Abs(Input.GetAxis(playerAimVer)) > 0
-            Mathf.Abs(pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimHor)) > 0 ||
-            Mathf.Abs(pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimVer)) > 0
-            )
+        if(Mathf.Abs(pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimHor)) > 0 ||
+            Mathf.Abs(pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimVer)) > 0 )
         {
-            //spawnX = Input.GetAxis(playerAimHor);
-            //spawnY = Input.GetAxis(playerAimVer);
-
             spawnX = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimHor);
             spawnY = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimVer);
         }
         else
         {
-            //spawnX = Input.GetAxis(playerHor);
-            //spawnY = Input.GetAxis(playerVer);
-
             spawnX = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerHor);
             spawnY = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerVer);
         }
@@ -273,18 +255,11 @@ public class PlayerMovement : MonoBehaviour {
 	void CheckThrow()
 	{
 
-        if (//Input.GetAxis(playerThrow) != 0 && numBalls > 0 && ableToThrow
-            pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerThrow) > 0 && ableToThrow && numBalls > 0
-            )
+        if (pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerThrow) > 0 && ableToThrow && numBalls > 0)
 		{
 
 			anim.SetBool ("Throwing", true);
             GetComponent<PlayerInfoScript>().ballUI.SetActive(false);
-
-            //float xMag = Input.GetAxis(playerAimHor);
-            //float yMag = Input.GetAxis(playerAimVer);
-            //float xMag2 = Input.GetAxis(playerHor);
-            //float yMag2 = Input.GetAxis(playerVer);
 
             float xMag = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimHor);
             float yMag = pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerAimVer);
@@ -296,8 +271,6 @@ public class PlayerMovement : MonoBehaviour {
             float spawnX = gameObject.transform.position.x;
             float spawnY = gameObject.transform.position.y;
 
-            // might have to create a new set for mag2 then mag1 for overriding
-            // test to see how things work with this tho
             if (xMag2 > 0)
             {
                 spawnX = gameObject.transform.position.x + 1.0f;
@@ -352,8 +325,16 @@ public class PlayerMovement : MonoBehaviour {
 
             if (xMag != 0 || yMag != 0)
                 ball.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * xMag * 0.5f, throwSpeed * yMag * 0.5f);
-            else
+            else if(xMag2 != 0 || yMag2 != 0)
                 ball.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * xMag2 * 0.5f, throwSpeed * yMag2 * 0.5f);
+            else
+            {
+                if(rightFacing)
+                    ball.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * 1.0f * 0.5f, throwSpeed * yMag2 * 0.5f);
+                else
+                    ball.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * -1.0f * 0.5f, throwSpeed * yMag2 * 0.5f);
+            }
+
 
             numBalls--;
             GetComponent<PlayerInfoScript>().DecreaseBalls();

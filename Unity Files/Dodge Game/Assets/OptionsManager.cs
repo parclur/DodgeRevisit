@@ -15,8 +15,8 @@ public class OptionsManager : MonoBehaviour {
     public bool horizontalAxisActive;
     float horizontalAxisValue;
 
-    bool audioOn, fxOn;
-    int audioVolume, fxAmount;
+    public static bool audioOn, fxOn;
+    public static int audioVolume, fxAmount;
 
     public GameObject musicIcon, fxIcon;
     public GameObject musicBar0, musicBar1, musicBar2, musicBar3, musicBar4, musicBar5, musicBar6, musicBar7, musicBar8;
@@ -39,10 +39,10 @@ public class OptionsManager : MonoBehaviour {
         horizontalAxisActive = false;
         horizontalAxisValue = 0f;
 
-        audioOn = true; //SHOULD BE SET IN MAIN GAME MANAGER
-        fxOn = true; //SHOULD BE SET IN MAIN GAME MANAGER
-        audioVolume = 9; //SHOULD BE SET IN MAIN GAME MANAGER
-        fxAmount = 9; //SHOULD BE SET IN MAIN GAME MANAGER
+        audioOn = GameDetails.audioOn;
+        fxOn = GameDetails.fxOn;
+        audioVolume = GameDetails.audioVolume;
+        fxAmount = GameDetails.fxVolume;
 
         AdjustVolume();
         AdjustFX();
@@ -73,6 +73,8 @@ public class OptionsManager : MonoBehaviour {
 
     void Update()
     {
+        Debug.Log("Audio On? " + audioOn);
+
         //Makes the axis like a button and only moved once
         if (player.GetAxis("LSV") != 0)
         {
@@ -234,6 +236,8 @@ public class OptionsManager : MonoBehaviour {
             musicBarShadow.SetActive(false);
             AdjustVolume();
         }
+
+        GameDetails.audioOn = audioOn;
     }
 
     void SetFXOnOrOff()
@@ -253,6 +257,8 @@ public class OptionsManager : MonoBehaviour {
             fxIcon.SetActive(true);
             fxBarShadow.SetActive(false);
         }
+
+        GameDetails.fxOn = fxOn;
     }
 
     void AdjustVolume()
@@ -393,6 +399,8 @@ public class OptionsManager : MonoBehaviour {
         {
             buttonClickSound.PlayOneShot(buttonClick, 1f);
         }
+
+        GameDetails.audioVolume = audioVolume;
     }
 
     void AdjustFX()
@@ -521,5 +529,7 @@ public class OptionsManager : MonoBehaviour {
         {
             buttonClickSound.PlayOneShot(buttonClick, 1f);
         }
+
+        GameDetails.fxVolume = fxAmount;
     }
 }

@@ -19,9 +19,11 @@ public class GameDetails : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        /*
         Debug.Log("Audio Volume: " + audioVolume);
         Debug.Log("Audio On: " + audioOn);
         Debug.Log("FX Volume: " + fxVolume);
         Debug.Log("FX On: " + fxOn);
+        */
 	}
 }

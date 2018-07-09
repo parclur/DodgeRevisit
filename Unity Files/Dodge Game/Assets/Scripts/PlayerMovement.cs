@@ -105,7 +105,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             gameObject.SetActive(true);
 
-            SetCursor();
+            //SetCursor();
             CheckGrounded();
             CheckPickup();
             CheckMove();

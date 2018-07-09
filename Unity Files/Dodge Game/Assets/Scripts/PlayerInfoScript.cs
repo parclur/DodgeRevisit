@@ -53,20 +53,30 @@ public class PlayerInfoScript : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        gameObject.SetActive(ableToSpawn);
+
         anim.SetBool("Throwing", false);
         anim.SetBool("Catching", false);
         anim.SetBool("Dashing", false);
 
         anim.SetBool("Throwing", false);
 
+        
         if (!isOut && ableToSpawn)
         {
-            gameObject.SetActive(true);
+            gameObject.GetComponent<BoxCollider2D>().size = new Vector2(1.2f, 1.85f);
+            gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(-0.04f, -0.075f);
+
         }
         else
         {
-            gameObject.SetActive(false);
+            gameObject.GetComponent<BoxCollider2D>().size = new Vector2(1.2f, 0.1f);
+            gameObject.GetComponent<BoxCollider2D>().offset = new Vector2( 0f, -1f);
+
         }
+
+        GetComponent<Animator>().SetBool("Dead", isOut);
+
     }
 
     public void SetTeam(int teamNum)
@@ -124,6 +134,9 @@ public class PlayerInfoScript : MonoBehaviour {
             GameObject ball = Instantiate(ballPrefab, gameObject.transform);
             ball.name = ballSavedName;
             numBalls--;
+            GetComponent<PlayerMovement>().DecreaseBall();
+            GetComponent<Animator>().SetBool("HoldingBall", false);
+
         }
 
         isOut = true;
@@ -153,11 +166,13 @@ public class PlayerInfoScript : MonoBehaviour {
                 numBalls = 0;
                 ball.GetComponent<BallScript>().ResetPos();
                 GetComponent<PlayerMovement>().DecreaseBall();
+                GetComponent<Animator>().SetBool("HoldingBall", false);
+
                 //Debug.Log(numBalls + name);
             }
 
-            gameObject.SetActive(true);
             anim.SetInteger("CharacterClass", characterClass);
+            anim.SetBool("Dead", false);
             
             isOut = false;
         }

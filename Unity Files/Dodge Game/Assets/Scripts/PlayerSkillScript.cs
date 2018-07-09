@@ -360,7 +360,7 @@ public class PlayerSkillScript : MonoBehaviour {
         }
         else
         {
-            if (canBeHit)
+            if (canBeHit && !GetComponent<PlayerInfoScript>().isOut)
             {
                 if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 &&
                     col.transform.GetComponent<BallScript>().possession != GetComponent<PlayerInfoScript>().infoTeam)

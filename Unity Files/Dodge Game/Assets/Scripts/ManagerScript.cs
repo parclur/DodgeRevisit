@@ -308,17 +308,33 @@ public class ManagerScript : MonoBehaviour {
 
     void SetTeams()
     {
-        team1Players.Add(player1);
-        sizeOfTeam1++;
+        if (p1CanSpawn)
+        {
+            team1Players.Add(player1);
+            sizeOfTeam1++;
+        }
 
-        team2Players.Add(player2);
-        sizeOfTeam2++;
 
-        team1Players.Add(player3);
-        sizeOfTeam1++;
+        if (p2CanSpawn)
+        {
+            team2Players.Add(player2);
+            sizeOfTeam2++;
+        }
 
-        team2Players.Add(player4);
-        sizeOfTeam2++;
+
+        if (p3CanSpawn)
+        {
+            team1Players.Add(player3);
+            sizeOfTeam1++;
+        }
+
+
+        if (p4CanSpawn)
+        {
+            team2Players.Add(player4);
+            sizeOfTeam2++;
+        }
+
     }
 
     void CheckTeamOne()
@@ -328,7 +344,7 @@ public class ManagerScript : MonoBehaviour {
 
         for (int i = 0; i < totalTeamMembers; i++)
         {
-            if(team1Players[i].GetComponent<PlayerInfoScript>().isOut)
+            if (team1Players[i].GetComponent<PlayerInfoScript>().isOut)
                 teamMemebersOut++;
 
             if(teamMemebersOut >= totalTeamMembers)
@@ -357,7 +373,7 @@ public class ManagerScript : MonoBehaviour {
 
         for (int i = 0; i < totalTeamMembers; i++)
         {
-            if (team2Players[i].GetComponent<PlayerInfoScript>().isOut)
+            if (team2Players[i].GetComponent<PlayerInfoScript>().isOut || !team1Players[i].GetComponent<PlayerInfoScript>().ableToSpawn)
                 teamMemebersOut++;
 
             if (teamMemebersOut >= totalTeamMembers)

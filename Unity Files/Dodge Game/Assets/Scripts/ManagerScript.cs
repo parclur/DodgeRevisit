@@ -51,7 +51,7 @@ public class ManagerScript : MonoBehaviour {
     bool canCheck = true;
 
     bool onLevel = false;
-    bool endofRound = false;
+    public bool endofRound = false;
 
     public static GameObject instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 
@@ -79,12 +79,15 @@ public class ManagerScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
         CheckPlayer();
 
     }
 
     // Update is called once per frame
     void Update () {
+
+        //CheckForStartOfGame();
 
         CheckPlayer();
 
@@ -122,6 +125,15 @@ public class ManagerScript : MonoBehaviour {
         GetComponent<UIManager>().SetBlueTeamNum(team1Score);
         GetComponent<UIManager>().SetRedTeamNum(team2Score);
         GetComponent<UIManager>().SetRoundNum(gameRound);
+        }
+
+    }
+
+    void CheckForStartOfGame()
+    {
+        if(endofRound == true)
+        {
+            StartCoroutine(StartCountDown());
         }
     }
 
@@ -225,8 +237,8 @@ public class ManagerScript : MonoBehaviour {
 
     void CheckPlayer()
     {
-        if (SceneManager.GetActiveScene().name == "Level1" || SceneManager.GetActiveScene().name == "Test_Level_2"
-            || SceneManager.GetActiveScene().name == "Test_Level_3" || SceneManager.GetActiveScene().name == "Test_Level_4")
+        if (SceneManager.GetActiveScene().name == "Level1" || SceneManager.GetActiveScene().name == "Test_Level_2" || 
+            SceneManager.GetActiveScene().name == "Test_Level_3" || SceneManager.GetActiveScene().name == "Test_Level_4")
         {
             player1 = GameObject.FindGameObjectWithTag("Player1");
             player2 = GameObject.FindGameObjectWithTag("Player2");
@@ -242,6 +254,8 @@ public class ManagerScript : MonoBehaviour {
             {
                 SetTeams();
                 onLevel = true;
+                StartCoroutine(StartCountDown());
+
             }
         }
     }
@@ -433,7 +447,7 @@ public class ManagerScript : MonoBehaviour {
                 team2Players[i].GetComponent<PlayerInfoScript>().ResetPlayer();
             }
 
-            endofRound = false;
+            //endofRound = false;
             canCheck = true;
             gameRound++;
 
@@ -444,9 +458,7 @@ public class ManagerScript : MonoBehaviour {
                 GameObject.Find("Ball" + i).GetComponent<BallScript>().ResetPos();
             }
 
-            endofRound = false;
-            canCheck = true;
-			//gameRound++;
+            StartCoroutine(StartCountDown());
         }
 
 
@@ -525,6 +537,23 @@ public class ManagerScript : MonoBehaviour {
         {
             player4Deaths++;
         }
+    }
+
+    IEnumerator StartCountDown()
+    {
+        yield return new WaitForSeconds(1.0f);
+        GetComponent<UIManager>().EnableRoundEndText("3");
+
+        yield return new WaitForSeconds(1.0f);
+        GetComponent<UIManager>().EnableRoundEndText("2");
+
+        yield return new WaitForSeconds(1.0f);
+        GetComponent<UIManager>().EnableRoundEndText("1");
+
+        yield return new WaitForSeconds(1.0f);
+        GetComponent<UIManager>().EnableRoundEndText("GO");
+
+        endofRound = false;
     }
 }
 

@@ -58,9 +58,6 @@ public class PlayerInfoScript : MonoBehaviour {
         anim.SetBool("Throwing", false);
         anim.SetBool("Catching", false);
         anim.SetBool("Dashing", false);
-
-        anim.SetBool("Throwing", false);
-
         
         if (!isOut && ableToSpawn)
         {
@@ -138,7 +135,7 @@ public class PlayerInfoScript : MonoBehaviour {
             GetComponent<Animator>().SetBool("HoldingBall", false);
 
         }
-
+        StartCoroutine(Disappear());
         isOut = true;
     }
 
@@ -173,7 +170,9 @@ public class PlayerInfoScript : MonoBehaviour {
 
             anim.SetInteger("CharacterClass", characterClass);
             anim.SetBool("Dead", false);
-            
+
+            gameObject.SetActive(true);
+
             isOut = false;
         }
 
@@ -200,6 +199,12 @@ public class PlayerInfoScript : MonoBehaviour {
         {
             spawn = GameObject.Find("Player_Start_Point_Red_2").transform.position;
         }
+    }
+
+    IEnumerator Disappear()
+    {
+        yield return new WaitForSeconds(2.0f);
+        gameObject.SetActive(false);
     }
 
 }

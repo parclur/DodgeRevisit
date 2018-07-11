@@ -365,6 +365,11 @@ public class PlayerSkillScript : MonoBehaviour {
                 if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 &&
                     col.transform.GetComponent<BallScript>().possession != GetComponent<PlayerInfoScript>().infoTeam)
                 {
+                    if (col.gameObject.GetComponent<Rigidbody2D>().velocity.x > 0)
+                        GetComponent<SpriteRenderer>().flipX = true;
+                    else
+                        GetComponent<SpriteRenderer>().flipX = false;
+
                     GetComponent<PlayerInfoScript>().KillPlayer();
 
                     col.gameObject.GetComponent<BallScript>().SendKillInfo(gameObject);

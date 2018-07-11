@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool ableToShield = true;
     public bool rightFacing = true;
     bool ableToJump = true;
+    bool ableToWorm = false;
 
     public bool onGround;
 	public LayerMask ground;
@@ -101,14 +102,15 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!GetComponent<PlayerInfoScript>().isOut)
+        if (!GetComponent<PlayerInfoScript>().isOut && !GetComponent<ManagerScript>().endofRound)
         {
             gameObject.SetActive(true);
 
-            //SetCursor();
             CheckGrounded();
             CheckPickup();
             CheckMove();
+
+            CheckForWorm();
 
             if(pmPlayer.GetAxis(playerShield) < 1)
             {
@@ -163,7 +165,6 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
-
 	void CheckGrounded()
 	{
 		if (groundTimer == 0f)
@@ -199,7 +200,6 @@ public class PlayerMovement : MonoBehaviour {
 			}
         }
     }
-
 
 	void CheckPickup()
 	{
@@ -361,6 +361,23 @@ public class PlayerMovement : MonoBehaviour {
     public void SetPlayerSpeed(float newSpeed)
     {
         speedMultiplier = newSpeed;
+    }
+
+    void CheckForWorm()
+    {
+        if(GameObject.Find("GameManager").GetComponent<ManagerScript>().endofRound)
+        {
+            string wormButton = "Y";
+
+            if(pmPlayer.GetButton(wormButton))
+            {
+                anim.SetBool("Worm", true);
+            }
+        }
+        else
+        {
+            anim.SetBool("Worm", false);
+        }
     }
 
 }

@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!GetComponent<PlayerInfoScript>().isOut && !GetComponent<ManagerScript>().endofRound)
+        if (!GetComponent<PlayerInfoScript>().isOut)// && !GetComponent<ManagerScript>().endofRound)
         {
             gameObject.SetActive(true);
 

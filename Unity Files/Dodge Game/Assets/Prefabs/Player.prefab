@@ -647,6 +647,10 @@ MonoBehaviour:
   shieldPrefab: {fileID: 1288964514461226, guid: 24d1fa10d099e6248a7b9d55bafb094e,
     type: 2}
   rechargeUI: {fileID: 1281344016465330}
+  strikerHit: {fileID: 8300000, guid: e4d9f78fbab0de44d9b68824cb07cd0a, type: 3}
+  blockerHit: {fileID: 8300000, guid: 60f58a6fb30957d43b136ef9b66b0237, type: 3}
+  strikerDash: {fileID: 8300000, guid: 1b44b1f05cec79f4090e50c00396b449, type: 3}
+  shieldHit: {fileID: 8300000, guid: bd0e0d24599598243aa23e59d1437801, type: 3}
 --- !u!114 &114929803305666498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -675,6 +679,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 0}
   characterClass: 0
   rechargeUI: {fileID: 1281344016465330}
+  throwBall: {fileID: 8300000, guid: 8eb98b7117836244a99c72420718b34e, type: 3}
   playerHor: LSH
   playerVer: LSV
   playerJump: A

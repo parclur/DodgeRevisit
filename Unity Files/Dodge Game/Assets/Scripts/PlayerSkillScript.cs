@@ -23,6 +23,18 @@ public class PlayerSkillScript : MonoBehaviour {
     public GameObject shieldPrefab;
     public GameObject rechargeUI;
 
+    public AudioClip strikerHit;
+    AudioSource strikerHitSound;
+
+    public AudioClip blockerHit;
+    AudioSource blockerHitSound;
+
+    public AudioClip strikerDash;
+    AudioSource strikerDashSound;
+
+    public AudioClip shieldHit;
+    AudioSource shieldHitSound;
+
     string playerSkill = "LT";
     string playerAimHor = "RSH";
     string playerAimVer = "RSV";
@@ -48,6 +60,10 @@ public class PlayerSkillScript : MonoBehaviour {
         anim = GetComponent<Animator>();
         //anim.SetBool("Dashing", false);
 
+        strikerHitSound = GetComponent<AudioSource>();
+        blockerHitSound = GetComponent<AudioSource>();
+        strikerDashSound = GetComponent<AudioSource>();
+        shieldHitSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -277,6 +293,8 @@ public class PlayerSkillScript : MonoBehaviour {
             player.GetAxis(playerSkill) > 0 
             )
         {
+            strikerDashSound.PlayOneShot(strikerDash, 1f);
+
             GetComponent<PlayerMovement>().SetPlayerSpeed(4.0f);
             dashAmount--;
             anim.SetBool("Dashing", true);
@@ -353,9 +371,12 @@ public class PlayerSkillScript : MonoBehaviour {
             if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 && 
                 col.transform.GetComponent<BallScript>().possession != GetComponent<PlayerInfoScript>().infoTeam)
             {
+                shieldHitSound.PlayOneShot(shieldHit, 1f);
+
                 col.gameObject.GetComponent<BallScript>().ChangeTeam();
                 col.gameObject.GetComponent<Rigidbody2D>().velocity *= -1;
                 shieldHealth--;
+
             }
         }
         else
@@ -365,6 +386,15 @@ public class PlayerSkillScript : MonoBehaviour {
                 if (col.transform.tag == "Ball" && col.transform.GetComponent<BallScript>().possession != 0 &&
                     col.transform.GetComponent<BallScript>().possession != GetComponent<PlayerInfoScript>().infoTeam)
                 {
+                    if (GetComponent<PlayerInfoScript>().characterClass == 0)
+                    {
+                        strikerHitSound.PlayOneShot(strikerHit, 1f);
+                    }
+                    else if (GetComponent<PlayerInfoScript>().characterClass == 1)
+                    {
+                        blockerHitSound.PlayOneShot(blockerHit, 1f);
+                    }
+
                     if (col.gameObject.GetComponent<Rigidbody2D>().velocity.x > 0)
                         GetComponent<SpriteRenderer>().flipX = true;
                     else
@@ -374,6 +404,7 @@ public class PlayerSkillScript : MonoBehaviour {
 
                     col.gameObject.GetComponent<BallScript>().SendKillInfo(gameObject);
                     Vector3 deathPoint = transform.position;
+
                 }
             }
             else

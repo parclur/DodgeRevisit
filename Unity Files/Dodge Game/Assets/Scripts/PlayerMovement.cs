@@ -48,7 +48,10 @@ public class PlayerMovement : MonoBehaviour {
 
 	public GameObject rechargeUI;
 
-	bool aDown = false;
+    public AudioClip throwBall;
+    AudioSource throwBallSound;
+
+    bool aDown = false;
 
     Rewired.Player pmPlayer;
 
@@ -90,6 +93,7 @@ public class PlayerMovement : MonoBehaviour {
             sr = GetComponent<SpriteRenderer>();
             anim.SetInteger("CharacterClass", characterClass);
 
+            throwBallSound = GetComponent<AudioSource>();
 
             if (characterClass == 1) {
 				gameObject.GetComponent<BoxCollider2D> ().size = new Vector2 (1.22f, 1.44f);
@@ -258,6 +262,7 @@ public class PlayerMovement : MonoBehaviour {
         if (pmPlayer.GetAxis(GetComponent<PlayerInfoScript>().playerThrow) > 0 && ableToThrow && numBalls > 0)
 		{
 
+            throwBallSound.PlayOneShot(throwBall, 1f);
 			anim.SetBool ("Throwing", true);
             GetComponent<PlayerInfoScript>().ballUI.SetActive(false);
 

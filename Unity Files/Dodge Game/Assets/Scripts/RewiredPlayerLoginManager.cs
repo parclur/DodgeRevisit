@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Rewired;
 
-public class RewiredPlayerLoginManager : MonoBehaviour {
+public class RewiredPlayerLoginManager : MonoBehaviour
+{
 
     public int playerId1 = 0;
     public int playerId2 = 1;
@@ -47,13 +48,16 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
     public AudioClip buttonClick;
     AudioSource buttonClickSound;
 
+    int p1Team, p2Team, p3Team, p4Team;
+    int p1TeamPlayerNumber, p2TeamPlayerNumber, p3TeamPlayerNumber, p4TeamPlayerNumber;
+    bool T1P1, T1P2, T1P3, T2P1, T2P2, T2P3, T3P1, T3P2, T3P3, T4P1, T4P2, T4P3;
+
     void Start()
     {
         player1 = ReInput.players.GetPlayer(playerId1);
         player2 = ReInput.players.GetPlayer(playerId2);
         player3 = ReInput.players.GetPlayer(playerId3);
         player4 = ReInput.players.GetPlayer(playerId4);
-
 
         p1State = 0;
         p2State = 0;
@@ -89,6 +93,29 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         p2AxisActive = false;
         p3AxisActive = false;
         p4AxisActive = false;
+
+        p1Team = 1;
+        p2Team = 2;
+        p3Team = 3;
+        p4Team = 4;
+
+        p1TeamPlayerNumber = 11;
+        p2TeamPlayerNumber = 21;
+        p3TeamPlayerNumber = 31;
+        p4TeamPlayerNumber = 41;
+
+        T1P1 = true;
+        T1P2 = false;
+        T1P3 = false;
+        T2P1 = true;
+        T2P2 = false;
+        T2P3 = false;
+        T3P1 = true;
+        T3P2 = false;
+        T3P3 = false;
+        T4P1 = true;
+        T4P2 = false;
+        T4P3 = false;
 
         startTextPanel.SetActive(false);
 
@@ -248,7 +275,7 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
 
             if (playerId == 3)
             {
-               //Debug.Log("PlayerID 3");
+                //Debug.Log("PlayerID 3");
                 p4AxisActive = false;
 
                 p4CharacterLeftSelectButton.GetComponent<Graphic>().color = p4Color;
@@ -426,6 +453,89 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
             }
         }
 
+        //Switch Player Teams
+        if (player.GetButtonDown("RB"))
+        {
+            buttonClickSound.PlayOneShot(buttonClick, 1f);
+
+            //Debug.Log(playerId + " Back");
+            switch (playerId)
+            {
+                //Player 1
+                case 0:
+                    ResetTeamPlayers(p1TeamPlayerNumber);
+                    p1Team++;
+                    break;
+
+                //Player 2
+                case 1:
+                    ResetTeamPlayers(p2TeamPlayerNumber);
+                    p2Team++;
+                    break;
+
+                //Player 3
+                case 2:
+                    ResetTeamPlayers(p3TeamPlayerNumber);
+                    p3Team++;
+                    break;
+
+                //Player 4
+                case 3:
+                    ResetTeamPlayers(p4TeamPlayerNumber);
+                    p4Team++;
+                    break;
+            }
+            Player1Team();
+            Player2Team();
+            Player3Team();
+            Player4Team();
+
+            Debug.Log("Player 1: Team  " + p1Team + " Number " + p1TeamPlayerNumber);
+            Debug.Log("Player 2: Team  " + p2Team + " Number " + p2TeamPlayerNumber);
+            Debug.Log("Player 3: Team  " + p3Team + " Number " + p3TeamPlayerNumber);
+            Debug.Log("Player 4: Team  " + p4Team + " Number " + p4TeamPlayerNumber);
+        }
+        if (player.GetButtonDown("LB"))
+        {
+            buttonClickSound.PlayOneShot(buttonClick, 1f);
+
+            //Debug.Log(playerId + " Back");
+            switch (playerId)
+            {
+                //Player 1
+                case 0:
+                    ResetTeamPlayers(p1TeamPlayerNumber);
+                    p1Team--;
+                    break;
+
+                //Player 2
+                case 1:
+                    ResetTeamPlayers(p2TeamPlayerNumber);
+                    p2Team--;
+                    break;
+
+                //Player 3
+                case 2:
+                    ResetTeamPlayers(p3TeamPlayerNumber);
+                    p3Team--;
+                    break;
+
+                //Player 4
+                case 3:
+                    ResetTeamPlayers(p4TeamPlayerNumber);
+                    p4Team--;
+                    break;
+            }
+            Player1Team();
+            Player2Team();
+            Player3Team();
+            Player4Team();
+
+            Debug.Log("Player 1: Team  " + p1Team + " Number " + p1TeamPlayerNumber);
+            Debug.Log("Player 2: Team  " + p2Team + " Number " + p2TeamPlayerNumber);
+            Debug.Log("Player 3: Team  " + p3Team + " Number " + p3TeamPlayerNumber);
+            Debug.Log("Player 4: Team  " + p4Team + " Number " + p4TeamPlayerNumber);
+        }
     }
 
     void Player1State()
@@ -613,6 +723,158 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         }
     }
 
+    void Player1Team()
+    {
+        switch (p1Team)
+        {
+            //sets team to 4 to cycle through the teams
+            case 0:
+                p1Team = 4;
+                p1TeamPlayerNumber = CheckTeamPlayers(p1Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 1:
+                p1Team = 1;
+                p1TeamPlayerNumber = CheckTeamPlayers(p1Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 2:
+                p1Team = 2;
+                p1TeamPlayerNumber = CheckTeamPlayers(p1Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 3:
+                p1Team = 3;
+                p1TeamPlayerNumber = CheckTeamPlayers(p1Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 4:
+                p1Team = 4;
+                p1TeamPlayerNumber = CheckTeamPlayers(p1Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            //sets teams to 1 to cylce through the teams
+            case 5:
+                p1Team = 1;
+                p1TeamPlayerNumber = CheckTeamPlayers(p1Team); //returns which player they are on the team to give them a unique color
+                break;
+        }
+    }
+
+    void Player2Team()
+    {
+        switch (p2Team)
+        {
+            //sets team to 4 to cycle through the teams
+            case 0:
+                p2Team = 4;
+                p2TeamPlayerNumber = CheckTeamPlayers(p2Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 1:
+                p2Team = 1;
+                p2TeamPlayerNumber = CheckTeamPlayers(p2Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 2:
+                p2Team = 2;
+                p2TeamPlayerNumber = CheckTeamPlayers(p2Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 3:
+                p2Team = 3;
+                p2TeamPlayerNumber = CheckTeamPlayers(p2Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 4:
+                p2Team = 4;
+                p2TeamPlayerNumber = CheckTeamPlayers(p2Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            //sets teams to 1 to cylce through the teams
+            case 5:
+                p2Team = 1;
+                p2TeamPlayerNumber = CheckTeamPlayers(p2Team); //returns which player they are on the team to give them a unique color
+                break;
+        }
+    }
+
+    void Player3Team()
+    {
+        switch (p2Team)
+        {
+            //sets team to 4 to cycle through the teams
+            case 0:
+                p3Team = 4;
+                p3TeamPlayerNumber = CheckTeamPlayers(p3Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 1:
+                p3Team = 1;
+                p3TeamPlayerNumber = CheckTeamPlayers(p3Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 2:
+                p3Team = 2;
+                p3TeamPlayerNumber = CheckTeamPlayers(p3Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 3:
+                p3Team = 3;
+                p3TeamPlayerNumber = CheckTeamPlayers(p3Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 4:
+                p3Team = 4;
+                p3TeamPlayerNumber = CheckTeamPlayers(p3Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            //sets teams to 1 to cylce through the teams
+            case 5:
+                p3Team = 1;
+                p3TeamPlayerNumber = CheckTeamPlayers(p3Team); //returns which player they are on the team to give them a unique color
+                break;
+        }
+    }
+
+    void Player4Team()
+    {
+        switch (p2Team)
+        {
+            //sets team to 4 to cycle through the teams
+            case 0:
+                p4Team = 4;
+                p4TeamPlayerNumber = CheckTeamPlayers(p4Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 1:
+                p4Team = 1;
+                p4TeamPlayerNumber = CheckTeamPlayers(p4Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 2:
+                p4Team = 2;
+                p4TeamPlayerNumber = CheckTeamPlayers(p4Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 3:
+                p4Team = 3;
+                p4TeamPlayerNumber = CheckTeamPlayers(p4Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            case 4:
+                p4Team = 4;
+                p4TeamPlayerNumber = CheckTeamPlayers(p4Team); //returns which player they are on the team to give them a unique color
+                break;
+
+            //sets teams to 1 to cylce through the teams
+            case 5:
+                p4Team = 1;
+                p4TeamPlayerNumber = CheckTeamPlayers(p4Team); //returns which player they are on the team to give them a unique color
+                break;
+        }
+    }
+
     bool IsSomeonePlaying()
     {
         if (p1Join || p2Join || p3Join || p4Join)
@@ -645,6 +907,140 @@ public class RewiredPlayerLoginManager : MonoBehaviour {
         {
             startTextPanel.SetActive(false);
             return false;
+        }
+    }
+
+    int CheckTeamPlayers(int playerTeam)
+    {
+        if (playerTeam == 1)
+        {
+            if (!T1P1)
+            {
+                T1P1 = true;
+                return 11;
+            }
+            else if (!T1P2)
+            {
+                T1P2 = true;
+                return 12;
+            }
+            else if (!T1P3)
+            {
+                T1P3 = true;
+                return 13;
+            }
+            else
+                return 0;
+        }
+
+        else if (playerTeam == 2)
+        {
+            if (!T2P1)
+            {
+                T2P1 = true;
+                return 21;
+            }
+            else if (!T2P2)
+            {
+                T2P2 = true;
+                return 22;
+            }
+            else if (!T2P3)
+            {
+                T2P3 = true;
+                return 23;
+            }
+            else
+                return 0;
+        }
+
+        else if (playerTeam == 3)
+        {
+            if (!T3P1)
+            {
+                T3P1 = true;
+                return 31;
+            }
+            else if (!T3P2)
+            {
+                T3P2 = true;
+                return 32;
+            }
+            else if (!T3P3)
+            {
+                T3P3 = true;
+                return 33;
+            }
+            else
+                return 0;
+        }
+
+        else if (playerTeam == 4)
+        {
+            if (!T4P1)
+            {
+                T4P1 = true;
+                return 41;
+            }
+            else if (!T4P2)
+            {
+                T4P2 = true;
+                return 42;
+            }
+            else if (!T4P3)
+            {
+                T4P3 = true;
+                return 43;
+            }
+            else
+                return 0;
+        }
+
+        else
+            return 0;
+    }
+
+    //Called after a player switches teams to keep track of active teams
+    void ResetTeamPlayers(int playerTeamNumber)
+    {
+        switch (playerTeamNumber)
+        {
+            case 11:
+                T1P1 = false;
+                break;
+            case 12:
+                T1P2 = false;
+                break;
+            case 13:
+                T1P3 = false;
+                break;
+            case 21:
+                T2P1 = false;
+                break;
+            case 22:
+                T2P2 = false;
+                break;
+            case 23:
+                T2P3 = false;
+                break;
+            case 31:
+                T3P1 = false;
+                break;
+            case 32:
+                T3P2 = false;
+                break;
+            case 33:
+                T3P3 = false;
+                break;
+            case 41:
+                T4P1 = false;
+                break;
+            case 42:
+                T4P2 = false;
+                break;
+            case 43:
+                T4P3 = false;
+                break;
         }
     }
 }
